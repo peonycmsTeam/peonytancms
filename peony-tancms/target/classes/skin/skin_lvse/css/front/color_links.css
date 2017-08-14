@@ -1,0 +1,54 @@
+/* ---本文件为网站文字，共用图片样式所有用色 --- */
+body,a:link,a:visited{color: #000;text-decoration: none;}/*-默认字体颜色and连接-*/
+
+/*-默认连接经过样式-*/
+.en_font{ font-family:"Arial"; }/*-英文字体-*/
+/*-正常-*/
+.color_hongse,.color_hongse a:link,.color_hongse a:visited {color: #1c4f36; }
+.color_cheng,.color_cheng a:link,.color_cheng a:visited {color: #F90; }
+.color_lanse,.color_lanse a:link,.color_lanse a:visited {color:#45a4de; }
+.color_lv,.color_lv a:link,.color_lv a:visited {color: #339900;}
+.color_hei,.color_hei a:link,.color_hei a:visited{color:#000; }
+.color_huise,.color_huise a:link,.color_huise a:visited,input,select,textarea {color: #838383; }
+.color_bai,.color_bai a:link,.color_bai a:visited {color: #fff;}
+/*亮色-*/
+.color_hongse_l,.color_hongse_l a:link,.color_hongse_l a:visited {color: #F00; }
+.color_cheng_l,.color_cheng_l a:link,.color_cheng_l a:visited {color: #FC0; }.color_cheng_hb{color: #fff; background:#FF9801; padding:2px 2px 0 2px; margin:0 2px 0 0}
+.color_lanse_l,.color_lanse_l a:link,.color_lanse_l a:visited {color:#0471A9; }.color_lanse_nn,.color_lanse_nn a:link,.color_lanse_nn a:visited {color:#0368a8; }
+.color_lv_l,.color_lv_l a:link,.color_lv_l a:visited {color: #99CC00 }
+.color_huise_l,.color_huise_l a:link,.color_huise_l a:visited {color:#D5D5D5; }
+/*暗色-*/
+.color_hongse_n,.color_hongse_n a:link,.color_hongse_n a:visited {color: #08572e; }
+.color_cheng_n,.color_cheng_n a:link,.color_cheng_n a:visited {color: #F60; }
+.color_lanse_n,.color_lanse_n a:link,.color_lanse_n a:visited {color:#013364; }
+.color_lv_n,.color_lv_n a:link,.color_lv_n a:visited {color:#006600 }
+.color_huise_n,.color_huise_n a:link,.color_huise_n a:visited {color: #454545; }
+/*灰色-*/
+.color_hongse_h,.color_hongse_h a:link,.color_hongse_h a:visited {color: #900; }
+.color_cheng_h,.color_cheng_h a:link,.color_cheng_h a:visited {color: #F60; }
+.color_lanse_h,.color_lanse_h a:link,.color_lanse_h a:visited {
+	color:#6380A8;
+ 
+}
+.color_lv_h,.color_lv_h a:link,.color_lv_h a:visited {color:#006600 }
+.color_huise_h,.color_huise_h a:link,.color_huise_h a:visited {color: #595959; }
+
+.font_14px,.font_14pxb{ font-size:14px; }.font_14pxb{ font-weight:bold}
+.xihuad,.xihuad a:link,.xihuad a:visited {font-size:14px;text-decoration: underline; font-weight:bold;}
+.xihua a:link,.xihua a:visited,.xihua_noa,.xihua_noa a:link,.xihua_noa a:visited {text-decoration: underline;}
+
+.biaoti,.biaoti a:link,.biaoti a:visited {font-size:16px; font-weight:bold; }
+.biaoti2,.biaoti2 a:link,.biaoti2 a:visited {font-size:14px; font-weight:bold; }
+
+.font_heiti,.font_heitib{ font-family:"黑体"; font-weight:normal !important;  }
+.font_heiti{ font-size:20px !important;}
+.font_heitib{ font-size:26px !important;}
+.none_b{ font-weight:normal !important}
+.font_12px{font-size:12px !important; font-weight:normal !important}.font_21px{font-size:21px !important;}
+
+.font_16px{font-size:16px !important; }
+.color_hongse_h a:hover,.color_cheng_h a:hover,.color_lanse_h a:hover,.color_lv_h a:hover,.color_huise_h a:hover,.color_hongse a:hover,.color_hongse_n a:hover,.color_cheng_n a:hover,.color_lanse_n a:hover,.color_lv_n a:hover,.color_huise_n a:hover,.color_cheng_l a:hover,.color_lanse_l a:hover,.color_lv_l a:hover,.color_huise_l a:hover,.color_lanse a:hover,.color_lv a:hover,.color_hei a:hover,.color_cheng a:hover,.xihuad a:hover,.xihua a:hover,.huise1 a:hover,.biaoti a:hover,biaoti2 a:hover,.color_huise a:hover,a:hover {color: #FF0000;}
+.color_hongse_l a:hover{color:#FF6600;}.color_bai a:hover {color:#fff075;}
+
+ 
+

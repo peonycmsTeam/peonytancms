@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <!-- 启用注解 -->
+    <mvc:annotation-driven/>
+
+    <!-- 使用web server默认servlet访问静态资源 -->
+    <mvc:default-servlet-handler/>
+
+    <!--对web包中的所有控制类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.peony.*.*.controller"/>
+
+    <!--对web包中的所有验证类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.peony.*.*.validate"/>
+
+    <!-- 国际化资源文件,用于基本验证 -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>config.i18n.application_resources</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="messageSourceHelper" class="com.peony.core.common.utils.MessageSourceUtil">
+        <property name="messageSource" ref="messageSource"/>
+    </bean>
+
+    <!-- 避免IE执行ajax时出现下载文件 -->
+    <bean id="mappingJacksonHttpMessageConverter"
+          class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/html;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 请求映射 -->
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="mappingJacksonHttpMessageConverter"/> <!-- json转换器 -->
+            </list>
+        </property>
+    </bean>
+
+    <!-- freemarker的视图配置 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <property name="requestContextAttribute" value="request"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+    </bean>
+
+    <!-- 文件上传 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding">
+            <value>UTF-8</value>
+        </property>
+        <property name="maxUploadSize">
+            <value>10485760</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+    </bean>
+
+    <!-- freemarker配置 -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/view"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">0</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- 异常处理拦截 -->
+    <!--bean id="exceptionResolver" class="com.peony.core.common.exception.CustomSimpleMappingExceptionResolver" -->
+
+    <!-- 权限拦截 -->
+    <mvc:interceptors>
+        <!--登陆 拦截器 -->
+        <mvc:interceptor>
+            <mvc:mapping path="/**/**"/>
+            <mvc:exclude-mapping path="/login"/>
+            <mvc:exclude-mapping path="/userlogin"/>
+            <mvc:exclude-mapping path="/loginCheck"/>
+            <mvc:exclude-mapping path="/backloginCheck"/>
+            <mvc:exclude-mapping path="/logout"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <bean class="com.peony.peonyfront.interceptor.LoginInterceptor">
+            </bean>
+        </mvc:interceptor>
+
+        <!-- 防止表单重复提交 -->
+        <mvc:interceptor>
+            <!-- 需拦截的地址 -->
+            <!-- 一级目录 -->
+            <mvc:mapping path="/**/**add**"/>
+            <mvc:mapping path="/**/**edit**"/>
+            <mvc:exclude-mapping path="/login/**"/>
+            <mvc:exclude-mapping path="/css/**"/>
+            <mvc:exclude-mapping path="/js/**"/>
+            <mvc:exclude-mapping path="/images/**"/>
+            <bean class="com.peony.core.common.utils.filter.AvoidDuplicateSubmissionInterceptor">
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+</beans>

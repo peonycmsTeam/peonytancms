@@ -1,0 +1,218 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>test1.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="main" style="width:600px;height:400px;"></div>
+    
+ 	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+ 	
+    <script type="text/javascript">
+    
+ // 路径配置
+require.config({
+  paths: {
+    echarts: 'http://echarts.baidu.com/build/dist'
+  }
+});
+
+// 使用
+require(
+  [
+    'echarts',
+    'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+     'echarts/chart/line',
+  ],
+  function (ec) {
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = ec.init(document.getElementById('main')); 
+    //设置数据
+    var option = {
+         tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['增长率','本月','上月']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true},
+            magicType : {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    xAxis : [
+        {
+            type : 'category',
+            position: 'bottom',
+            boundaryGap: true,
+            axisLine : {    // 轴线
+                show: true,
+                lineStyle: {
+                    color: 'green',
+                    type: 'solid',
+                    width: 2
+                }
+            },
+            axisTick : {    // 轴标记
+                show:true,
+                length: 10,
+                lineStyle: {
+                    color: 'red',
+                    type: 'solid',
+                    width: 2
+                }
+            },
+            axisLabel : {
+                show:true,
+                interval: 'auto',    // {number}
+                rotate: 45,
+                margin: 8,
+                formatter: '{value}',
+                textStyle: {
+                    color: 'blue',
+                    fontFamily: 'sans-serif',
+                    fontSize: 15,
+                    fontStyle: 'italic',
+                    fontWeight: 'bold'
+                }
+            },
+            splitLine : {
+                show:true,
+                lineStyle: {
+                    color: '#483d8b',
+                    type: 'dashed',
+                    width: 1
+                }
+            },
+            splitArea : {
+                show: true,
+                areaStyle:{
+                    color:['rgba(144,238,144,0.3)','rgba(135,200,250,0.3)']
+                }
+            },
+            data : [
+                '新疆','北京','天津','湖南','河北',
+                {
+                    value:'河南',
+                    textStyle: {
+                    
+                    }
+                },
+                '湖北','黑龙江','西藏','云南','上海'
+            ]
+        },
+        {
+            type : 'category',
+            data : []
+        }
+    ],
+    yAxis : [
+        {
+            type : 'value',
+            position: 'left',
+            //min: 0,
+            //max: 300,
+            //splitNumber: 5,
+            boundaryGap: [0,0.1],
+            axisLine : {    // 轴线
+                show: true,
+                lineStyle: {
+                    color: 'red',
+                    type: 'dashed',
+                    width: 2
+                }
+            },
+            axisTick : {    // 轴标记
+                show:true,
+                length: 10,
+                lineStyle: {
+                    color: 'green',
+                    type: 'solid',
+                    width: 2
+                }
+            },
+            axisLabel : {
+                show:true,
+                interval: 'auto',    // {number}
+                rotate: -45,
+                margin: 18,
+                formatter: '{value}',    // Template formatter!
+                textStyle: {
+                    color: '#1e90ff',
+                    fontFamily: 'verdana',
+                    fontSize: 10,
+                    fontStyle: 'normal',
+                    fontWeight: 'bold'
+                }
+            },
+            splitLine : {
+                show:true,
+                lineStyle: {
+                    color: '#483d8b',
+                    type: 'dotted',
+                    width: 2
+                }
+            },
+            splitArea : {
+                show: true,
+                areaStyle:{
+                    color:['rgba(205,92,92,0.3)','rgba(255,215,0,0.3)']
+                }
+            }
+        },
+        {
+            type : 'value',
+            splitNumber: 10,
+            axisLabel : {
+                formatter: function (value) {
+                    // Function formatter
+                    return value + ''
+                }
+            },
+            splitLine : {
+                show: false
+            }
+        }
+    ],
+    series : [
+        {
+            name: '增长率',
+            type: 'bar',
+            data:[58, 52, 46, 46, 40, 40, 32, 28, 22]
+        },
+        {
+            name:'上月',
+            type: 'line',
+            data: [75, 82, 89, 75, 80, 70, 55, 60, 43]
+        },
+        {
+            name:'本月',
+            type: 'line',
+
+            data: [15, 30, 40, 30, 40, 30, 23, 35, 23]
+        }
+    ]
+    };
+
+    // 为echarts对象加载数据 
+    myChart.setOption(option); 
+  }
+);
+    </script>
+
+
+  </body>
+</html>

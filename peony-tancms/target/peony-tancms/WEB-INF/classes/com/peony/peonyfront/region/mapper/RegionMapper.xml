@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.region.dao.RegionMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.region.model.Region">
+        <id column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="provinceId" property="provinceid" jdbcType="INTEGER" />
+        <result column="regionName" property="regionname" jdbcType="VARCHAR" />
+        <result column="regionLevel" property="regionlevel" jdbcType="INTEGER" />
+        <result column="parentId" property="parentid" jdbcType="INTEGER" />
+        <result column="regionAbbr" property="regionabbr" jdbcType="VARCHAR" />
+        <result column="ordinal" property="ordinal" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        regionId, provinceId, regionName, regionLevel, parentId, regionAbbr, ordinal
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where regionId = #{regionid,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from wdyq_region
+        where regionId = #{regionid,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.region.model.Region">
+        insert into wdyq_region (regionId, provinceId, regionName,
+        regionLevel, parentId, regionAbbr,
+        ordinal)
+        values (#{regionid,jdbcType=INTEGER}, #{provinceid,jdbcType=INTEGER}, #{regionname,jdbcType=VARCHAR},
+        #{regionlevel,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{regionabbr,jdbcType=VARCHAR},
+        #{ordinal,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.region.model.Region">
+        insert into wdyq_region
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="provinceid != null">
+                provinceId,
+            </if>
+            <if test="regionname != null">
+                regionName,
+            </if>
+            <if test="regionlevel != null">
+                regionLevel,
+            </if>
+            <if test="parentid != null">
+                parentId,
+            </if>
+            <if test="regionabbr != null">
+                regionAbbr,
+            </if>
+            <if test="ordinal != null">
+                ordinal,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="provinceid != null">
+                #{provinceid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="regionlevel != null">
+                #{regionlevel,jdbcType=INTEGER},
+            </if>
+            <if test="parentid != null">
+                #{parentid,jdbcType=INTEGER},
+            </if>
+            <if test="regionabbr != null">
+                #{regionabbr,jdbcType=VARCHAR},
+            </if>
+            <if test="ordinal != null">
+                #{ordinal,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.region.model.Region">
+        update wdyq_region
+        <set>
+            <if test="provinceid != null">
+                provinceId = #{provinceid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                regionName = #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="regionlevel != null">
+                regionLevel = #{regionlevel,jdbcType=INTEGER},
+            </if>
+            <if test="parentid != null">
+                parentId = #{parentid,jdbcType=INTEGER},
+            </if>
+            <if test="regionabbr != null">
+                regionAbbr = #{regionabbr,jdbcType=VARCHAR},
+            </if>
+            <if test="ordinal != null">
+                ordinal = #{ordinal,jdbcType=INTEGER},
+            </if>
+        </set>
+        where regionId = #{regionid,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.region.model.Region">
+        update wdyq_region
+        set provinceId = #{provinceid,jdbcType=INTEGER},
+        regionName = #{regionname,jdbcType=VARCHAR},
+        regionLevel = #{regionlevel,jdbcType=INTEGER},
+        parentId = #{parentid,jdbcType=INTEGER},
+        regionAbbr = #{regionabbr,jdbcType=VARCHAR},
+        ordinal = #{ordinal,jdbcType=INTEGER}
+        where regionId = #{regionid,jdbcType=INTEGER}
+    </update>
+
+    <!-- 根据regionId查找下级地域 -->
+    <select id="selectByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where parentId = #{regionid,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据regionId查找下级地域 -->
+    <select id="selectByParentIdAndPK" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where parentId = #{regionid,jdbcType=INTEGER} or regionId = #{regionid,jdbcType=INTEGER}
+    </select>
+
+    <!-- 根据userId查询所属区域 -->
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        FROM wdyq_region
+        where regionId in ( SELECT region_id from pe_t_user_region where user_id= #{userId,jdbcType=INTEGER} )
+    </select>
+
+    <!-- 根据regionId查找下级地域 -->
+    <select id="selectLikeParentId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.region.model.Region">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where parentId LIKE CONCAT ('${regionid}','%')
+    </select>
+
+    <!-- 查询parentId是-1的区域 -->
+    <select id="selectRegion" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.region.model.Region">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where parentId = -1
+    </select>
+
+    <!-- 查询parentId是是省id的区域 -->
+    <select id="selectRegionByProvinceId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region
+        where 1=1
+        and parentId = provinceId
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+    </select>
+
+</mapper>

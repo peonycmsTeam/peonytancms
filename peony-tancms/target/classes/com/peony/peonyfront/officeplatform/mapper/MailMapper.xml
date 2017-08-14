@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.officeplatform.dao.MailMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.officeplatform.model.Mail">
+        <id column="mail_id" property="mailId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="receive_user" property="receiveUser" jdbcType="VARCHAR" />
+        <result column="send_user_id" property="sendUserId" jdbcType="INTEGER" />
+        <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+        <result column="receive_time" property="receiveTime" jdbcType="TIMESTAMP" />
+        <result column="state" property="state" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="delete_time" property="deleteTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        mail_id, title, content, receive_user, send_user_id, send_time, receive_time, state,
+        type, is_delete, delete_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_mail
+        where mail_id = #{mailId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_mail
+        where mail_id = #{mailId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.officeplatform.model.Mail">
+        insert into pe_t_mail (mail_id, title, content,
+        receive_user, send_user_id, send_time,
+        receive_time, state, type,
+        is_delete, delete_time)
+        values (#{mailId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+        #{receiveUser,jdbcType=VARCHAR}, #{sendUserId,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP},
+        #{receiveTime,jdbcType=TIMESTAMP}, #{state,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+        #{isDelete,jdbcType=INTEGER}, #{deleteTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.officeplatform.model.Mail">
+        insert into pe_t_mail
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mailId != null">
+                mail_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="receiveUser != null">
+                receive_user,
+            </if>
+            <if test="sendUserId != null">
+                send_user_id,
+            </if>
+            <if test="sendTime != null">
+                send_time,
+            </if>
+            <if test="receiveTime != null">
+                receive_time,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="isDelete != null">
+                is_delete,
+            </if>
+            <if test="deleteTime != null">
+                delete_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mailId != null">
+                #{mailId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveUser != null">
+                #{receiveUser,jdbcType=VARCHAR},
+            </if>
+            <if test="sendUserId != null">
+                #{sendUserId,jdbcType=INTEGER},
+            </if>
+            <if test="sendTime != null">
+                #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receiveTime != null">
+                #{receiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="deleteTime != null">
+                #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.officeplatform.model.Mail">
+        update pe_t_mail
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveUser != null">
+                receive_user = #{receiveUser,jdbcType=VARCHAR},
+            </if>
+            <if test="sendUserId != null">
+                send_user_id = #{sendUserId,jdbcType=INTEGER},
+            </if>
+            <if test="sendTime != null">
+                send_time = #{sendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="receiveTime != null">
+                receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="isDelete != null">
+                is_delete = #{isDelete,jdbcType=INTEGER},
+            </if>
+            <if test="deleteTime != null">
+                delete_time = #{deleteTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where mail_id = #{mailId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.officeplatform.model.Mail">
+        update pe_t_mail
+        set title = #{title,jdbcType=VARCHAR},
+        content = #{content,jdbcType=VARCHAR},
+        receive_user = #{receiveUser,jdbcType=VARCHAR},
+        send_user_id = #{sendUserId,jdbcType=INTEGER},
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+        receive_time = #{receiveTime,jdbcType=TIMESTAMP},
+        state = #{state,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        is_delete = #{isDelete,jdbcType=INTEGER},
+        delete_time = #{deleteTime,jdbcType=TIMESTAMP}
+        where mail_id = #{mailId,jdbcType=INTEGER}
+    </update>
+    <!-- 收件箱分页查询 -->
+    <select id="selectMailByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_mail
+        <where>
+            <if test="sendUserId!=null">
+                and send_user_id = #{sendUserId,jdbcType=VARCHAR}
+            </if>
+            and is_delete = 0
+        </where>
+        order by send_time desc
+    </select>
+    <delete id="delMailByMailIds" parameterType="java.lang.Integer">
+        update pe_t_mail
+        set is_delete = 1
+        where mail_id in
+        <foreach collection="mailIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- 发送邮件总数 -->
+    <select id="selectMailTodayCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*) count from pe_t_mail
+        <where>
+            is_delete = 0
+            and to_days(send_time)=to_days(now())
+            <if test="userId!=null">
+                and send_user_id = #{userId}
+            </if>
+        </where>
+    </select>
+</mapper>

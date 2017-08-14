@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.topic.dao.TopicMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.topic.model.Topic">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userId" property="userid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="abstruct" property="abstruct" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+        <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="lastUpdatedTime" property="lastupdatedtime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, userId, name, abstruct, state, start_time,
+        end_time, create_time,
+        update_time,
+        lastUpdatedTime
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_topic
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from
+        pe_t_topic
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.topic.model.Topic">
+        insert into pe_t_topic
+        (id, userId, name,
+        abstruct, state, start_time,
+        end_time,
+        create_time, update_time,
+        lastUpdatedTime)
+        values
+        (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{abstruct,jdbcType=VARCHAR},
+        #{state,jdbcType=INTEGER}, #{startTime,jdbcType=TIMESTAMP},
+        #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{lastupdatedtime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.topic.model.Topic">
+        insert into pe_t_topic
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userId,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="abstruct != null">
+                abstruct,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="startTime != null">
+                start_time,
+            </if>
+            <if test="endTime != null">
+                end_time,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="lastupdatedtime != null">
+                lastUpdatedTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="abstruct != null">
+                #{abstruct,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastupdatedtime != null">
+                #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.topic.model.Topic">
+        update pe_t_topic
+        <set>
+            <if test="userid != null">
+                userId = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="abstruct != null">
+                abstruct = #{abstruct,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastupdatedtime != null">
+                lastUpdatedTime = #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.topic.model.Topic">
+        update pe_t_topic
+        set userId = #{userid,jdbcType=INTEGER},
+        name =
+        #{name,jdbcType=VARCHAR},
+        abstruct = #{abstruct,jdbcType=VARCHAR},
+        state = #{state,jdbcType=INTEGER},
+        start_time =
+        #{startTime,jdbcType=TIMESTAMP},
+        end_time =
+        #{endTime,jdbcType=TIMESTAMP},
+        create_time =
+        #{createTime,jdbcType=TIMESTAMP},
+        update_time =
+        #{updateTime,jdbcType=TIMESTAMP},
+        lastUpdatedTime =
+        #{lastupdatedtime,jdbcType=TIMESTAMP}
+        where id =
+        #{id,jdbcType=INTEGER}
+    </update>
+    <!-- 全查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.topic.model.Topic">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_topic
+        <where>
+            <if test="userid !=null">
+                and userId = #{userid}
+            </if>
+            <if test="userid !=null">
+                and state = 1
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    <!-- 查询用户专题个数 -->
+    <select id="selectTopicCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*)
+        from pe_t_topic
+        <where>
+            state
+            <if test="userId !=null">
+                and userId = #{userId}
+            </if>
+            <if test="userId !=null">
+                and state = 1
+            </if>
+        </where>
+    </select>
+</mapper>

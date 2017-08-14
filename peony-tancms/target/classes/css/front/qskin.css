@@ -1,0 +1,11 @@
+.header .bg{ position:relative;}
+.qskin{ position:absolute; right:0; top:17px;}
+.qskin li{ float:left; cursor:pointer;}
+.qskin li span{ background-image:url(../../images/img/qskin/v_03.png); background-repeat: no-repeat; display:block; height:26px; width:26px; overflow:hidden; }
+.qskin li span.skin1{ background-position:0 0;}
+.qskin li span.skin2{ background-position:-40px 0;}
+.qskin li span.skin3{ background-position:-80px 0;}
+.qskin li.this span.skin1{ background-position:0 -67px;}
+.qskin li.this span.skin2{ background-position:-40px -67px;}
+.qskin li.this span.skin3{ background-position:-80px -67px;}
+.huany{ padding-right:90px}

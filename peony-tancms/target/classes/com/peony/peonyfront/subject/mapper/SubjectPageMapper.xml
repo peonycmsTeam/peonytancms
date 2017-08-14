@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.subject.dao.SubjectPageMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.subject.model.SubjectPage">
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+        <result column="pageId" property="pageid" jdbcType="VARCHAR" />
+        <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="downloadDate" property="downloaddate" jdbcType="TIMESTAMP" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="clickCount" property="clickcount" jdbcType="INTEGER" />
+        <result column="replyCount" property="replycount" jdbcType="INTEGER" />
+        <result column="forwardCount" property="forwardcount" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="publishDate" property="publishdate" jdbcType="TIMESTAMP" />
+        <result column="newsLevel" property="newslevel" jdbcType="INTEGER" />
+        <result column="polarity" property="polarity" jdbcType="INTEGER" />
+        <result column="groupCount" property="groupcount" jdbcType="INTEGER" />
+        <result column="groupSeedId" property="groupseedid" jdbcType="VARCHAR" />
+        <result column="is_mainInfo" property="isMaininfo" jdbcType="VARCHAR" />
+        <result column="is_read" property="isRead" jdbcType="INTEGER" />
+        <result column="userId" property="userid" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,subjectId,pageId,updateTime,url,webSite,downloadDate,title,summary,clickCount,replyCount,forwardCount,type,
+        publishDate,newsLevel,polarity,groupCount,groupSeedId,is_mainInfo,is_read,userId
+    </sql>
+
+    <sql id="modelTableName">
+        <![CDATA[pe_t_subject_page]]>
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+            </if>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="title!=null">
+                and title like CONCAT ('%','${title}','%')
+            </if>
+            <if test="type!=null and type!=0">
+                and type = #{type}
+            </if>
+            <if test="polarity!=null and polarity!=-2">
+                and polarity = #{polarity}
+            </if>
+            <if test="isRead!=null and isRead!=-1">
+                and is_read = #{isRead}
+            </if>
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+            <if test="newslevelConditions!=null">
+                and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+            </if>
+            and is_mainInfo = 1
+            and userId = #{userid}
+            ORDER BY publishDate DESC
+        </where>
+    </select>
+
+    <!-- 分页查询 首页查询 按title去重 -->
+    <select id="selectGroupByTitle" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        select * from ( SELECT
+        id,title,groupseedid,
+        webSite,url,publishDate
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+
+            and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+
+            and newsLevel in (0,3,4,5 )
+            and is_mainInfo = 1
+            and userId = #{userid}
+            ORDER BY publishDate DESC
+            limit 20) page GROUP BY
+            title ORDER BY
+            publishDate DESC ;
+        </where>
+    </select>
+    <!-- 批量删除 -->
+    <delete id="batchDelete" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        delete from
+        <include refid="modelTableName" />
+        where userId = #{userid}
+        and  <![CDATA[id in ( ${idArray}  )]]>
+    </delete>
+
+    <!-- 修改倾向性 -->
+    <update id="update" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        update
+        <include refid="modelTableName" />
+        <set>
+            <if test="polarity != null">
+                polarity = #{polarity}
+            </if>
+            <if test="isRead != null">
+                is_read = #{isRead}
+            </if>
+        </set>
+        where id = #{id} and userId = #{userid}
+    </update>
+
+    <select id="selectSubjectPageByGroupseedid" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            groupSeedId = #{groupseedid}
+            and userId = #{userid}
+            ORDER BY
+            publishDate DESC
+        </where>
+    </select>
+
+    <select id="load" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and subjectId = #{subjectid}
+            </if>
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            <if test="pageid!=null">
+                and pageId = #{pageid}
+            </if>
+            and userId = #{userid}
+        </where>
+    </select>
+    <!-- 根据id导出所选项 -->
+    <select id="selectSubjectPageByIds" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            id in
+            <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </where>
+        ORDER BY publishDate DESC
+    </select>
+    <!-- 根据id导出所选项(相似信息单独显示) -->
+    <select id="selectSubjectPageByIdsNotColspan" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT *
+        FROM pe_t_subject_page
+        WHERE groupSeedId IN(
+        SELECT groupSeedId
+        FROM pe_t_subject_page
+        WHERE id IN
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        )
+        ORDER BY groupSeedId,publishDate DESC
+    </select>
+    <!-- 根据所选时间导出 -->
+    <select id="selectSubjectPageByTime" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        title,url,webSite,publishDate,polarity,groupCount,type
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+            </if>
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+            <if test="newslevelConditions!=null">
+                and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+            </if>
+            and is_mainInfo = 1
+            and userId = #{userid}
+            ORDER BY publishDate DESC
+        </where>
+    </select>
+
+    <!-- 用户信息总数 -->
+    <select id="selectTotalCount" resultType="java.util.Map" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        select count(*) count ,type
+        from pe_t_subject_page where 1=1
+        <if test="userid!=null">
+            and userId = #{userid}
+            and newsLevel in (0,3,4,5)
+        </if>
+
+        and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY type
+    </select>
+
+    <!-- 查询汇总 -->
+    <select id="selectByCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(*) count,polarity,substr(t.publishDate,1,10)
+        publishDate
+        from
+        pe_t_subject_page t where 1=1
+        <if test="userid!=null">
+            and userId = #{userid}
+        </if>
+
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        and is_mainInfo = 1 and newsLevel in (0,3,4,5)
+        GROUP BY
+        t.polarity,substr(t.publishDate,1,10)
+        order
+        by publishDate
+    </select>
+
+
+    <!-- 按类别统计 -->
+    <select id="countSubjectTypeByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT COUNT(*) count,type from pe_t_subject_page where
+        userId=#{userid}
+        <if test="newslevelConditions!=null">
+            and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+        </if>
+        <if test="subjectidArray != null">
+            and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY type
+    </select>
+
+    <!-- 按类网站统计 -->
+    <select id="countSubjectWebSiteByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT COUNT(*) count,webSite from pe_t_subject_page where
+        userId=#{userid}
+        <if test="newslevelConditions!=null">
+            and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+        </if>
+        <if test="subjectidArray != null">
+            and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY webSite ORDER
+        BY count DESC LIMIT 0,5
+    </select>
+
+    <!-- 正负面统计 -->
+    <select id="countSubjectPolarityByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT COUNT(*) count,polarity from pe_t_subject_page where
+        userId=#{userid}
+        <if test="newslevelConditions!=null">
+            and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+        </if>
+        <if test="subjectidArray != null">
+            and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY polarity
+    </select>
+
+    <!-- 类别正负面统计 -->
+    <select id="countSubjectPolarityAndTypeByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT COUNT(*) count,polarity,type from pe_t_subject_page where
+        userId=#{userid} and type =#{type}
+        <if test="newslevelConditions!=null">
+            and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+        </if>
+        <if test="subjectidArray != null">
+            and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY polarity
+    </select>
+    <!-- 根据所选时间导出(单独显示信息) -->
+    <select id="selectSubjectPageByTimeNotColspan" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.SubjectPage">
+        SELECT
+        title,url,webSite,publishDate,polarity,groupCount
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+            </if>
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+            <if test="newslevelConditions!=null">
+                and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+            </if>
+            and userId = #{userid}
+            ORDER BY title,publishDate DESC
+        </where>
+    </select>
+    <!--按时间查询信息合并总数 -->
+    <select id="selectSubjectPageByTimeCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT
+        count(*) count
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+            </if>
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+            <if test="newslevelConditions!=null">
+                and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+            </if>
+            and is_mainInfo = 1
+            and userId = #{userid}
+            ORDER BY publishDate DESC
+        </where>
+    </select>
+    <!--按时间查询信息单独显示总数 -->
+    <select id="selectSubjectPageByTimeNotColspanCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        SELECT
+        count(*) count
+        FROM
+        <include refid="modelTableName" />
+        <where>
+            1=1
+            <if test="subjectid!=null">
+                and <![CDATA[subjectId in ( ${subjectidArray} )]]>
+            </if>
+            <if test="beginTime!=null">
+                and <![CDATA[publishDate >= '${beginTime}']]>
+            </if>
+            <if test="endTime!=null">
+                and <![CDATA[publishDate <= '${endTime}']]>
+            </if>
+            <if test="newslevelConditions!=null">
+                and <![CDATA[newsLevel in ( ${newslevelConditions} )]]>
+            </if>
+            and userId = #{userid}
+            ORDER BY publishDate,title DESC
+        </where>
+    </select>
+</mapper>

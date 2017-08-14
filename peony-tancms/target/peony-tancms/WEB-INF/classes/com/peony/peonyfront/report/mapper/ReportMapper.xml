@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.report.dao.ReportMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.report.model.Report">
+        <id column="report_id" property="reportId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="date" property="date" jdbcType="TIMESTAMP" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        report_id, title, user_id, date, create_time, type, address
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_report
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.report.model.Report">
+        insert into pe_t_report (report_id, title, user_id,
+        date, create_time, type,
+        address)
+        values (#{reportId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR},
+        #{date,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR},
+        #{address,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.report.model.Report">
+        insert into pe_t_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                report_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportId != null">
+                #{reportId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.report.model.Report">
+        update pe_t_report
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.report.model.Report">
+        update pe_t_report
+        set title = #{title,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=VARCHAR},
+        date = #{date,jdbcType=TIMESTAMP},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+        type = #{type,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR}
+        where report_id = #{reportId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询日报分页 -->
+    <select id="selectReportByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report
+        <where>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="beginDate != null">
+        	 <![CDATA[ AND create_time >= "${beginDate}" ]]>
+            </if>
+        </where>
+        order by date desc
+    </select>
+</mapper>

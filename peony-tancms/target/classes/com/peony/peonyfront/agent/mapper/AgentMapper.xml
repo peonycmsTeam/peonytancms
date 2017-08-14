@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.agent.dao.AgentMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.agent.model.Agent">
+        <id column="agent_id" property="agentId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="record" property="record" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="overview" property="overview" jdbcType="VARCHAR" />
+        <result column="logo" property="logo" jdbcType="VARCHAR" />
+        <result column="qq" property="qq" jdbcType="VARCHAR" />
+        <result column="qq2" property="qq2" jdbcType="VARCHAR" />
+        <result column="qq3" property="qq3" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        agent_id, user_id, record, email, url, overview, logo, qq, qq2, qq3, name, address,
+        user_name, phone
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_agent
+        where agent_id = #{agentId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_agent
+        where agent_id = #{agentId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.agent.model.Agent">
+        insert into pe_t_agent (agent_id, user_id, record,
+        email, url, overview,
+        logo, qq, qq2, qq3,
+        name, address, user_name,
+        phone)
+        values (#{agentId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{record,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{overview,jdbcType=VARCHAR},
+        #{logo,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{qq2,jdbcType=VARCHAR}, #{qq3,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
+        #{phone,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.agent.model.Agent">
+        insert into pe_t_agent
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="agentId != null">
+                agent_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="record != null">
+                record,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="overview != null">
+                overview,
+            </if>
+            <if test="logo != null">
+                logo,
+            </if>
+            <if test="qq != null">
+                qq,
+            </if>
+            <if test="qq2 != null">
+                qq2,
+            </if>
+            <if test="qq3 != null">
+                qq3,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="agentId != null">
+                #{agentId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="record != null">
+                #{record,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="overview != null">
+                #{overview,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="qq2 != null">
+                #{qq2,jdbcType=VARCHAR},
+            </if>
+            <if test="qq3 != null">
+                #{qq3,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.agent.model.Agent">
+        update pe_t_agent
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="record != null">
+                record = #{record,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="overview != null">
+                overview = #{overview,jdbcType=VARCHAR},
+            </if>
+            <if test="logo != null">
+                logo = #{logo,jdbcType=VARCHAR},
+            </if>
+            <if test="qq != null">
+                qq = #{qq,jdbcType=VARCHAR},
+            </if>
+            <if test="qq2 != null">
+                qq2 = #{qq2,jdbcType=VARCHAR},
+            </if>
+            <if test="qq3 != null">
+                qq3 = #{qq3,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where agent_id = #{agentId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.agent.model.Agent">
+        update pe_t_agent
+        set user_id = #{userId,jdbcType=INTEGER},
+        record = #{record,jdbcType=VARCHAR},
+        email = #{email,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        overview = #{overview,jdbcType=VARCHAR},
+        logo = #{logo,jdbcType=VARCHAR},
+        qq = #{qq,jdbcType=VARCHAR},
+        qq2 = #{qq2,jdbcType=VARCHAR},
+        qq3 = #{qq3,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        user_name = #{userName,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR}
+        where agent_id = #{agentId,jdbcType=INTEGER}
+    </update>
+</mapper>

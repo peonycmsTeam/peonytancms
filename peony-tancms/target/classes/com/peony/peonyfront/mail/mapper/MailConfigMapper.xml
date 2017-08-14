@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.mail.dao.MailConfigMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.mail.model.MailConfig">
+        <id column="mail_config_id" property="mailConfigId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="mail_temp_id" property="mailTempId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        mail_config_id, user_id, mail_temp_id, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_mail_config
+        where mail_config_id = #{mailConfigId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectMailConfigByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.mail.model.MailConfig">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_mail_config where 1=1
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=INTEGER}
+        </if>
+    </select>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_mail_config
+        where mail_config_id = #{mailConfigId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByUserId" parameterType="java.lang.Integer">
+        delete from pe_t_mail_config
+        where user_id = #{userId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.mail.model.MailConfig">
+        insert into pe_t_mail_config (mail_config_id, user_id, mail_temp_id,
+        create_time)
+        values (#{mailConfigId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{mailTempId,jdbcType=INTEGER},
+        #{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.mail.model.MailConfig">
+        insert into pe_t_mail_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="mailConfigId != null">
+                mail_config_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="mailTempId != null">
+                mail_temp_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="mailConfigId != null">
+                #{mailConfigId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="mailTempId != null">
+                #{mailTempId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.mail.model.MailConfig">
+        update pe_t_mail_config
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="mailTempId != null">
+                mail_temp_id = #{mailTempId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where mail_config_id = #{mailConfigId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.mail.model.MailConfig">
+        update pe_t_mail_config
+        set user_id = #{userId,jdbcType=INTEGER},
+        mail_temp_id = #{mailTempId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=TIMESTAMP}
+        where mail_config_id = #{mailConfigId,jdbcType=INTEGER}
+    </update>
+</mapper>

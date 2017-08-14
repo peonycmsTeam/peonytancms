@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.subjectkeywords.dao.SubjectKeywordsMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.subjectkeywords.model.SubjectKeywords">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="subjectId" property="subjectid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+        <result column="rejectFlag" property="rejectflag" jdbcType="VARCHAR" />
+        <result column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="mainbodyId" property="mainbodyid" jdbcType="INTEGER" />
+        <result column="eventId" property="eventid" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, subjectId, name, keywords, rejectFlag, regionId, mainbodyId, eventId
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject_keywords
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_subject_keywords
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.subjectkeywords.model.SubjectKeywords">
+        insert into pe_t_subject_keywords (id, subjectId, name,
+        keywords, rejectFlag, regionId,
+        mainbodyId, eventId)
+        values (#{id,jdbcType=INTEGER}, #{subjectid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{keywords,jdbcType=VARCHAR}, #{rejectflag,jdbcType=VARCHAR}, #{regionid,jdbcType=INTEGER},
+        #{mainbodyid,jdbcType=INTEGER}, #{eventid,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.subjectkeywords.model.SubjectKeywords">
+        insert into pe_t_subject_keywords
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="subjectid != null">
+                subjectId,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="keywords != null">
+                keywords,
+            </if>
+            <if test="rejectflag != null">
+                rejectFlag,
+            </if>
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="mainbodyid != null">
+                mainbodyId,
+            </if>
+            <if test="eventid != null">
+                eventId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="subjectid != null">
+                #{subjectid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords != null">
+                #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="rejectflag != null">
+                #{rejectflag,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="mainbodyid != null">
+                #{mainbodyid,jdbcType=INTEGER},
+            </if>
+            <if test="eventid != null">
+                #{eventid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.subjectkeywords.model.SubjectKeywords">
+        update pe_t_subject_keywords
+        <set>
+            <if test="subjectid != null">
+                subjectId = #{subjectid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                names = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="rejectflag != null">
+                rejectFlag = #{rejectflag,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                regionId = #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="mainbodyid != null">
+                mainbodyId = #{mainbodyid,jdbcType=INTEGER},
+            </if>
+            <if test="eventid != null">
+                eventId = #{eventid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.subjectkeywords.model.SubjectKeywords">
+        update pe_t_subject_keywords
+        set subjectId = #{subjectid,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        keywords = #{keywords,jdbcType=VARCHAR},
+        rejectFlag = #{rejectflag,jdbcType=VARCHAR},
+        regionId = #{regionid,jdbcType=INTEGER},
+        mainbodyId = #{mainbodyid,jdbcType=INTEGER},
+        eventId = #{eventid,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectSubjectListBySubjectId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject_keywords
+        where subjectId = #{subjectId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectSubjectListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        k.id, k.subjectId, k.name, k.keywords
+        from pe_t_subject_keywords k,pe_t_subject t
+        where t.id=k.subjectId and t.state=1 and t.userId = #{userId,jdbcType=INTEGER}
+    </select>
+
+
+    <!-- 根据分类节点id删除该节点下的关键词 -->
+    <delete id="deleteBySubjectId" parameterType="java.lang.Integer">
+        delete from pe_t_subject_keywords
+        where subjectId = #{subjectId,jdbcType=INTEGER}
+    </delete>
+</mapper>

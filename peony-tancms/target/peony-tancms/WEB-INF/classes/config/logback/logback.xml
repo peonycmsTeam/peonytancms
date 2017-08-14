@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d %p [%c] [%t] - &lt;%m&gt;%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="logfile"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${catalina.home}/logs/peony-tancms.log</File>
+        <encoder>
+            <pattern>%d %p [%c] [%t] - &lt;%m&gt;%n</pattern>
+        </encoder>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/peony-tancms.log.%d{.yyyy-MM-dd}
+            </fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <logger name="com.peony" level="INFO"/>
+    <logger name="com.springframework" level="WARN"/>
+    <root level="INFO">
+        <!--<appender-ref ref="stdout"/>-->
+        <appender-ref ref="logfile"/>
+    </root>
+</configuration>

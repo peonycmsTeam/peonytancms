@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.topic.dao.TopicPageMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.topic.model.TopicPage">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="topicId" property="topicid" jdbcType="INTEGER" />
+        <result column="pageId" property="pageid" jdbcType="VARCHAR" />
+        <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="downloadDate" property="downloaddate" jdbcType="TIMESTAMP" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="clickCount" property="clickcount" jdbcType="INTEGER" />
+        <result column="replyCount" property="replycount" jdbcType="INTEGER" />
+        <result column="forwardCount" property="forwardcount" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="publishDate" property="publishdate" jdbcType="TIMESTAMP" />
+        <result column="newsLevel" property="newslevel" jdbcType="INTEGER" />
+        <result column="polarity" property="polarity" jdbcType="INTEGER" />
+        <result column="userId" property="userid" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, topicId, pageId, updateTime, url, webSite,
+        downloadDate, title,
+        summary, clickCount,
+        replyCount, forwardCount,
+        type, publishDate, newsLevel, polarity, userId
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_topic_page
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        pe_t_topic_page
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        insert into pe_t_topic_page
+        (id, topicId, pageId,
+        updateTime, url, webSite,
+        downloadDate, title,
+        summary,
+        clickCount, replyCount, forwardCount,
+        type, publishDate,
+        newsLevel,
+        polarity, userId)
+        values (#{id,jdbcType=VARCHAR},
+        #{topicid,jdbcType=INTEGER},
+        #{pageid,jdbcType=VARCHAR},
+        #{updatetime,jdbcType=TIMESTAMP}, #{url,jdbcType=VARCHAR},
+        #{website,jdbcType=VARCHAR},
+        #{downloaddate,jdbcType=TIMESTAMP},
+        #{title,jdbcType=VARCHAR},
+        #{summary,jdbcType=VARCHAR},
+        #{clickcount,jdbcType=INTEGER}, #{replycount,jdbcType=INTEGER},
+        #{forwardcount,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{publishdate,jdbcType=TIMESTAMP},
+        #{newslevel,jdbcType=INTEGER},
+        #{polarity,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        insert into pe_t_topic_page
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="topicid != null">
+                topicId,
+            </if>
+            <if test="pageid != null">
+                pageId,
+            </if>
+            <if test="updatetime != null">
+                updateTime,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="website != null">
+                webSite,
+            </if>
+            <if test="downloaddate != null">
+                downloadDate,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="clickcount != null">
+                clickCount,
+            </if>
+            <if test="replycount != null">
+                replyCount,
+            </if>
+            <if test="forwardcount != null">
+                forwardCount,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="publishdate != null">
+                publishDate,
+            </if>
+            <if test="newslevel != null">
+                newsLevel,
+            </if>
+            <if test="polarity != null">
+                polarity,
+            </if>
+            <if test="userid != null">
+                userId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="topicid != null">
+                #{topicid,jdbcType=INTEGER},
+            </if>
+            <if test="pageid != null">
+                #{pageid,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="downloaddate != null">
+                #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="clickcount != null">
+                #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newslevel != null">
+                #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="polarity != null">
+                #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        update pe_t_topic_page
+        <set>
+            <if test="topicid != null">
+                topicId = #{topicid,jdbcType=INTEGER},
+            </if>
+            <if test="pageid != null">
+                pageId = #{pageid,jdbcType=VARCHAR},
+            </if>
+            <if test="updatetime != null">
+                updateTime = #{updatetime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                webSite = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="downloaddate != null">
+                downloadDate = #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="clickcount != null">
+                clickCount = #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                replyCount = #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                forwardCount = #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                publishDate = #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newslevel != null">
+                newsLevel = #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="polarity != null">
+                polarity = #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                userId = #{userid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        update
+        pe_t_topic_page
+        set topicId = #{topicid,jdbcType=INTEGER},
+        pageId =
+        #{pageid,jdbcType=VARCHAR},
+        updateTime =
+        #{updatetime,jdbcType=TIMESTAMP},
+        url = #{url,jdbcType=VARCHAR},
+        webSite = #{website,jdbcType=VARCHAR},
+        downloadDate =
+        #{downloaddate,jdbcType=TIMESTAMP},
+        title = #{title,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+        clickCount =
+        #{clickcount,jdbcType=INTEGER},
+        replyCount =
+        #{replycount,jdbcType=INTEGER},
+        forwardCount =
+        #{forwardcount,jdbcType=INTEGER},
+        type = #{type,jdbcType=INTEGER},
+        publishDate = #{publishdate,jdbcType=TIMESTAMP},
+        newsLevel =
+        #{newslevel,jdbcType=INTEGER},
+        polarity = #{polarity,jdbcType=INTEGER},
+        userId = #{userid,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!-- 全查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_topic_page
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="type !=null and type!=0">
+                and type = #{type}
+            </if>
+            <if test="stime !=null">
+                and <![CDATA[publishDate >= '${stime}']]>
+            </if>
+            <if test="etime!=null">
+                and <![CDATA[publishDate <= '${etime} 23:59:59']]>
+            </if>
+            and userId = #{userid,jdbcType=INTEGER}
+        </where>
+        order by publishDate desc
+    </select>
+    <!-- 查询汇总 -->
+    <select id="selectByCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type,substr(t.publishDate,1,10)
+        publishDate
+        from
+        pe_t_topic_page t
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= '${stime}'    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <= '${etime} 23:59:59']]>
+            </if>
+        </where>
+        GROUP BY t.type,substr(t.publishDate,1,10) order
+        by publishDate
+    </select>
+    <!-- 查询媒体汇总 -->
+    <select id="selectByMediaCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type from pe_t_topic_page t
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= '${stime}'    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <='${etime} 23:59:59']]>
+            </if>
+        </where>
+        GROUP BY
+        t.type order by publishDate;
+    </select>
+    <!-- 查询各分类媒体汇总 -->
+    <select id="selectByMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        select count(1) count,website from pe_t_topic_page
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= '${stime}'    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <= '${etime} 23:59:59']]>
+            </if>
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+        </where>
+        GROUP BY website order by count desc limit 5
+    </select>
+    <!-- 查询汇总 -->
+    <select id="selectByTypeCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type
+        from
+        pe_t_topic_page t
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= '${stime}'    ]]>
+            </if>
+
+        </where>
+        GROUP BY t.type order
+        by type
+    </select>
+    <!-- 批量删除所选项 -->
+    <delete id="delTopicPageByIds" parameterType="java.lang.Integer">
+        delete from
+        pe_t_topic_page
+        where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and userId = #{userid}
+    </delete>
+    <!-- 根据id查询出所选项 -->
+    <select id="selectTopicPageByIds" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        select * from
+        pe_t_topic_page
+        where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        and userId = #{userid}
+        order by publishDate desc
+    </select>
+    <!-- 全查询 -->
+    <select id="selectTopicPageBySelectTime" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.topic.model.TopicPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_topic_page
+        <where>
+            <if test="topicid !=null">
+                and topicId = #{topicid}
+            </if>
+            <if test="stime !=null">
+                and <![CDATA[publishDate >= '${stime}']]>
+            </if>
+            <if test="etime!=null">
+                and <![CDATA[publishDate <= '${etime} 23:59:59']]>
+            </if>
+            <if test="type !=null and type!=0">
+                and type = #{type}
+            </if>
+            and userId = #{userid,jdbcType=INTEGER}
+        </where>
+        order by publishDate desc
+    </select>
+
+    <delete id="delTopicPageByTopicId" parameterType="java.lang.Integer">
+        delete from
+        pe_t_topic_page
+        where
+        <if test="topicid !=null">
+            topicId = #{topicid}
+        </if>
+        and userId = #{userid}
+    </delete>
+</mapper>

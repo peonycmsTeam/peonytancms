@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.peony.peonyfront.operationlog.dao.OperationLogMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.operationlog.model.OperationLog">
+        <result column="time" jdbcType="TIMESTAMP" property="time" />
+        <result column="user_id" jdbcType="INTEGER" property="userId" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="type" jdbcType="CHAR" property="type" />
+        <result column="login_type" jdbcType="VARCHAR" property="loginType" />
+        <result column="operate_type" jdbcType="VARCHAR" property="operateType" />
+        <result column="operate_module" jdbcType="CHAR" property="operateModule" />
+        <result column="operation_log_id" jdbcType="VARCHAR" property="operationLogId" />
+    </resultMap>
+    <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.peony.peonyfront.operationlog.model.OperationLog">
+        <result column="content1" jdbcType="LONGVARCHAR" property="content1" />
+    </resultMap>
+    <sql id="Blob_Column_List">
+        content1
+    </sql>
+    <select id="selectTop20" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.operationlog.model.OperationLog">
+        SELECT user_id, COUNT(*) as counts from pe_t_operation_log t
+        where 
+ 		<![CDATA[time >= '${beginTime}']]>
+        and <![CDATA[time <= '${endTime}']]>
+        and t.type=1 and t.login_type !=3 GROUP BY t.user_id HAVING counts >10 ORDER BY counts DESC
+    </select>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.operationlog.model.OperationLog">
+        insert into pe_t_operation_log (time, user_id, name,
+        type, login_type,
+        operate_type, operate_module, operation_log_id,
+        content1)
+        values (#{time,jdbcType=TIMESTAMP}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{type,jdbcType=CHAR}, #{loginType,jdbcType=VARCHAR},
+        #{operateType,jdbcType=VARCHAR}, #{operateModule,jdbcType=CHAR}, #{operationLogId,jdbcType=VARCHAR},
+        #{content1,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.operationlog.model.OperationLog">
+        insert into pe_t_operation_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="time != null">
+                time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="loginType != null">
+                login_type,
+            </if>
+            <if test="operateType != null">
+                operate_type,
+            </if>
+            <if test="operateModule != null">
+                operate_module,
+            </if>
+            <if test="operationLogId != null">
+                operation_log_id,
+            </if>
+            <if test="content1 != null">
+                content1,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=CHAR},
+            </if>
+            <if test="loginType != null">
+                #{loginType,jdbcType=VARCHAR},
+            </if>
+            <if test="operateType != null">
+                #{operateType,jdbcType=VARCHAR},
+            </if>
+            <if test="operateModule != null">
+                #{operateModule,jdbcType=CHAR},
+            </if>
+            <if test="operationLogId != null">
+                #{operationLogId,jdbcType=VARCHAR},
+            </if>
+            <if test="content1 != null">
+                #{content1,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

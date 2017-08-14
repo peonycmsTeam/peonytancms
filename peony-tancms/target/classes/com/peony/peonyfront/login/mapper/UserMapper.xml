@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.login.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.login.model.User">
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="agent_id" property="agentId" jdbcType="INTEGER" />
+        <result column="belong_id" property="belongId" jdbcType="INTEGER" />
+        <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+        <result column="password" property="password" jdbcType="VARCHAR" />
+        <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+        <result column="sex" property="sex" jdbcType="CHAR" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="note" property="note" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="create_user" property="createUser" jdbcType="VARCHAR" />
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+        <result column="user_type" property="userType" jdbcType="CHAR" />
+        <result column="person_type" property="personType" jdbcType="CHAR" />
+        <result column="user_status" property="userStatus" jdbcType="CHAR" />
+        <result column="user_source" property="userSource" jdbcType="CHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="CHAR" />
+        <result column="expiry_time" property="expiryTime" jdbcType="TIMESTAMP" />
+        <result column="use_agent_logo" property="useAgentLogo" jdbcType="CHAR" />
+        <result column="platform_type" property="platformType" jdbcType="CHAR" />
+        <result column="user_style" property="userStyle" jdbcType="CHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        user_id,agent_id,belong_id, login_name, password, dept_id,
+        name, email,
+        mobile, sex, company,
+        address,platform_type,
+        note,
+        create_time, create_user,
+        last_login_time, user_type,person_type,
+        user_status,user_source,is_delete,
+        expiry_time,use_agent_logo,user_style
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_user
+        where user_id = #{userId,jdbcType=INTEGER} and is_delete
+        !='1'
+    </select>
+    <select id="selectUserByLoginName" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_user
+        where is_delete !='1' and (login_name =
+        #{loginName,jdbcType=VARCHAR} or email=#{loginName,jdbcType=VARCHAR}
+        or mobile=#{loginName,jdbcType=VARCHAR})
+    </select>
+
+    <select id="selectUsers" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_user where 1=1 and is_delete !='1'
+        <if test="deptId != null">
+            and dept_id = #{deptId,jdbcType=VARCHAR}
+        </if>
+        <if test="belongId != null">
+            and belong_id = #{belongId,jdbcType=INTEGER}
+        </if>
+        <if test="loginName != null">
+            and login_name = #{loginName,jdbcType=VARCHAR}
+        </if>
+        <!-- 查询市场用户 -->
+        <if test="personType != null">
+            and person_type = #{personType,jdbcType=CHAR}
+        </if>
+        <!-- 查询市场用户 -->
+        <if test="userSource != null">
+            and user_source = #{userSource,jdbcType=CHAR}
+        </if>
+        <if test="userIds != null">
+            and belong_id in(
+            #{userIds ,jdbcType=VARCHAR}
+            )
+        </if>
+    </select>
+    <!-- 通过管理者id查询 子用户 -->
+    <select id="selectByManagerId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        u.user_id,u.agent_id,u.belong_id, u.login_name,
+        u.password, u.dept_id, u.name, u.email,
+        u.mobile, u.sex, u.company,
+        u.address,
+        u.note, u.create_time, u.create_user,
+        u.last_login_time,
+        u.user_type,
+        u.person_type, u.user_status,
+        u.user_source,u.is_delete,
+        u.expiry_time,
+        u.platform_type
+        from pe_t_user u ,pe_t_seller s
+        where
+        s.manager_user_id = #{managerUserId,jdbcType=INTEGER} and
+        s.user_id=u.user_id and is_delete !='1'
+    </select>
+
+    <!--查询列表 分页 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.User">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_user
+        t
+        where 1=1 and is_delete !='1'
+        <if test="deptId != null">
+            and dept_id = #{deptId,jdbcType=INTEGER}
+        </if>
+        <if test="agentId != null">
+            and agent_id = #{agentId,jdbcType=INTEGER}
+        </if>
+        <if test="belongId != null">
+            and belong_id = #{belongId,jdbcType=INTEGER}
+        </if>
+        <if test="loginName != null">
+            and login_name like CONCAT('%','${loginName}','%' )
+        </if>
+        <if test="name != null">
+            and name like CONCAT('%','${name}','%' )
+        </if>
+        <if test="userStatus != null">
+            and user_status = #{userStatus,jdbcType=CHAR}
+        </if>
+        <if test="userSource != null">
+            and user_source = #{userSource,jdbcType=CHAR}
+        </if>
+        <if test="personType != null">
+            and person_type = #{personType,jdbcType=CHAR}
+        </if>
+        <if test="startTime != null">
+            and <![CDATA[create_time >= '${startTime}']]>
+        </if>
+        <if test="endTime != null">
+            and <![CDATA[create_time <= '${endTime}']]>
+        </if>
+        <if test="userIds != null">
+            and <![CDATA[belong_id in(${userIds})]]>
+
+        </if>
+        order by create_time desc
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.login.model.User">
+        update pe_t_user
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+    <!--查询根据roleId查询用户列表 分页 -->
+    <select id="selectByRoleIdPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.User">
+        select
+        u.user_id,u.agent_id,u.belong_id,
+        u.login_name,
+        u.password, u.dept_id,
+        u.name, u.email,u.mobile, u.sex,
+        u.company,u.address,u.note, u.create_time,
+        u.create_user,u.last_login_time,
+        u.user_type,u.person_type,
+        u.user_status,
+        u.user_source,u.is_delete,u.expiry_time,
+        u.use_agent_logo,u.platform_type
+        from
+        pe_t_user u,pe_t_user_role ur
+        where u.user_id=ur.user_id and ur.role_id=#{roleId,jdbcType=INTEGER}
+        order by u.create_time desc
+    </select>
+    <update id="updateUserStyle" parameterType="com.peony.peonyfront.login.model.User">
+        update pe_t_user
+        <set>
+            <if test="userStyle != null">
+                user_style = #{userStyle,jdbcType=CHAR},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+</mapper>

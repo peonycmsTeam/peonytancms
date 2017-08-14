@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.eventindex.dao.EventIndexMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.eventindex.model.EventIndex">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="regionName" property="regionname" jdbcType="VARCHAR" />
+        <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="month" property="month" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="mediaAttentionIndex" property="mediaattentionindex" jdbcType="REAL" />
+        <result column="netizensAttentionIndex" property="netizensattentionindex" jdbcType="REAL" />
+        <result column="compositeIndex" property="compositeindex" jdbcType="REAL" />
+        <result column="type" property="type" jdbcType="CHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, title, regionId, regionName, date, month, year,
+        mediaAttentionIndex,
+        netizensAttentionIndex,
+        compositeIndex, type
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_event_index
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        pe_t_event_index
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        insert into pe_t_event_index
+        (id, title, regionId,
+        regionName, date, month,
+        year,
+        mediaAttentionIndex, netizensAttentionIndex,
+        compositeIndex, type)
+        values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+        #{regionid,jdbcType=INTEGER},
+        #{regionname,jdbcType=VARCHAR},
+        #{date,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR},
+        #{year,jdbcType=VARCHAR}, #{mediaattentionindex,jdbcType=REAL},
+        #{netizensattentionindex,jdbcType=REAL},
+        #{compositeindex,jdbcType=REAL}, #{type,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        insert into pe_t_event_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="regionname != null">
+                regionName,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="month != null">
+                month,
+            </if>
+            <if test="year != null">
+                year,
+            </if>
+            <if test="mediaattentionindex != null">
+                mediaAttentionIndex,
+            </if>
+            <if test="netizensattentionindex != null">
+                netizensAttentionIndex,
+            </if>
+            <if test="compositeindex != null">
+                compositeIndex,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaattentionindex != null">
+                #{mediaattentionindex,jdbcType=REAL},
+            </if>
+            <if test="netizensattentionindex != null">
+                #{netizensattentionindex,jdbcType=REAL},
+            </if>
+            <if test="compositeindex != null">
+                #{compositeindex,jdbcType=REAL},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        update pe_t_event_index
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                regionId = #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                regionName = #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                month = #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                year = #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="mediaattentionindex != null">
+                mediaAttentionIndex =
+                #{mediaattentionindex,jdbcType=REAL},
+            </if>
+            <if test="netizensattentionindex != null">
+                netizensAttentionIndex =
+                #{netizensattentionindex,jdbcType=REAL},
+            </if>
+            <if test="compositeindex != null">
+                compositeIndex = #{compositeindex,jdbcType=REAL},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        update
+        pe_t_event_index
+        set title = #{title,jdbcType=VARCHAR},
+        regionId =
+        #{regionid,jdbcType=INTEGER},
+        regionName =
+        #{regionname,jdbcType=VARCHAR},
+        date = #{date,jdbcType=VARCHAR},
+        month =
+        #{month,jdbcType=VARCHAR},
+        year = #{year,jdbcType=VARCHAR},
+        mediaAttentionIndex = #{mediaattentionindex,jdbcType=REAL},
+        netizensAttentionIndex = #{netizensattentionindex,jdbcType=REAL},
+        compositeIndex = #{compositeindex,jdbcType=REAL},
+        type =
+        #{type,jdbcType=CHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectEventIndexByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_event_index
+        where date = #{date,jdbcType=VARCHAR}
+    </select>
+    <select id="selectEventIndexChinaByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        select title,mediaAttentionIndex,netizensAttentionIndex
+        ,compositeIndex FROM pe_t_event_index
+        where type=2 and month =
+        #{month,jdbcType=VARCHAR}
+        ORDER BY compositeIndex
+        DESC LIMIT 10
+
+    </select>
+
+    <select id="selectEventIndexChinaZhouByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+			<![CDATA[
+		select title,mediaAttentionIndex,netizensAttentionIndex
+		,compositeIndex FROM pe_t_event_index
+		where type=2 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		ORDER BY compositeIndex
+		DESC LIMIT 10
+]]>
+    </select>
+
+    <select id="selectEventIndexChinaYueByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        select title,mediaAttentionIndex,netizensAttentionIndex
+        ,compositeIndex FROM pe_t_event_index
+        where type=2 and month =
+        #{month,jdbcType=VARCHAR}-1
+        ORDER BY compositeIndex
+        DESC LIMIT 10
+
+    </select>
+
+    <select id="selectEventIndexShengByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        select title,mediaAttentionIndex,netizensAttentionIndex
+        ,compositeIndex FROM pe_t_event_index
+        where type=1 and
+        regionId like
+        CONCAT('${regionid}','%' )
+        and month = #{month,jdbcType=VARCHAR}
+        ORDER
+        BY
+        compositeIndex
+        DESC LIMIT 10
+
+    </select>
+
+    <select id="selectEventIndexShengZhouByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+		<![CDATA[
+		select title,mediaAttentionIndex,netizensAttentionIndex
+		,compositeIndex FROM pe_t_event_index
+		where type=1 and
+		regionId like
+		CONCAT('${regionid}','%' )
+		and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		ORDER
+		BY
+		compositeIndex
+		DESC LIMIT 10
+]]>
+    </select>
+
+    <select id="selectEventIndexShengYueByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.eventindex.model.EventIndex">
+        select title,mediaAttentionIndex,netizensAttentionIndex
+        ,compositeIndex FROM pe_t_event_index
+        where type=1 and
+        regionId like
+        CONCAT('${regionid}','%' )
+        and month = #{month,jdbcType=VARCHAR}-1
+        ORDER
+        BY
+        compositeIndex
+        DESC LIMIT 10
+
+    </select>
+
+</mapper>

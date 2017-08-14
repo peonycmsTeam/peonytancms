@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.subject.dao.WebSiteMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.subject.model.WebSite">
+        <id column="website_id" property="websiteId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+        <result column="phone" property="phone" jdbcType="VARCHAR" />
+        <result column="fax" property="fax" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        <result column="record" property="record" jdbcType="VARCHAR" />
+        <result column="nature" property="nature" jdbcType="TINYINT" />
+        <result column="media_type" property="mediaType" jdbcType="TINYINT" />
+        <result column="process_description" property="processDescription" jdbcType="VARCHAR" />
+        <result column="material" property="material" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        website_id, name, url, company, phone, fax, address, legal_person, ip, record, nature,media_type,
+        process_description, material, create_time,contacts
+    </sql>
+
+    <!-- 通过url匹配查询 -->
+    <select id="selectByUrl" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.WebSite">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_website
+        <where>
+            url like CONCAT ('%','${url}','%')
+        </where>
+    </select>
+
+</mapper>

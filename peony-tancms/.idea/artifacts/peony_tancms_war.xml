@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="peony-tancms:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="peony-tancms.war">
+      <element id="artifact" artifact-name="peony-tancms:war exploded" />
+    </root>
+  </artifact>
+</component>

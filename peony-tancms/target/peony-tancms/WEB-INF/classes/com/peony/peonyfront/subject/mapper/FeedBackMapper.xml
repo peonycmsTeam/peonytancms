@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.subject.dao.FeedBackMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.subject.model.FeedBack">
+        <id column="feedback_id" property="feedbackId" jdbcType="INTEGER" />
+        <result column="info_id" property="infoId" jdbcType="VARCHAR" />
+        <result column="info_title" property="infoTitle" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="opinion" property="opinion" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        feedback_id, info_id, info_title, type, opinion, user_id, user_name, time
+    </sql>
+    <!-- 插入 -->
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.subject.model.FeedBack">
+        insert into pe_t_feedback
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="feedbackId != null">
+                feedback_id,
+            </if>
+            <if test="infoId != null">
+                info_id,
+            </if>
+            <if test="infoTitle != null">
+                info_title,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="opinion != null">
+                opinion,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="feedbackId != null">
+                #{feedbackId,jdbcType=INTEGER},
+            </if>
+            <if test="infoId != null">
+                #{infoId,jdbcType=VARCHAR},
+            </if>
+            <if test="infoTitle != null">
+                #{infoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="opinion != null">
+                #{opinion,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+</mapper>

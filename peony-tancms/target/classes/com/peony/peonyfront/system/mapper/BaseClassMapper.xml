@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.system.dao.BaseClassMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.system.model.BaseClass">
+        <id column="baseclass_id" property="baseclassId" jdbcType="INTEGER" />
+        <result column="baseclass_pid" property="baseclassPid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="order" property="order" jdbcType="VARCHAR" />
+        <result column="explain" property="explain" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        baseclass_id, baseclass_pid, name, `order`, `explain`
+    </sql>
+
+    <select id="selectPublicBaseClass" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_baseclass
+        where baseclass_pid = 0 and is_public=1
+    </select>
+
+    <select id="selectBaseClassByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT baseclass_id,baseclass_pid,`name`,`order`,`explain`,is_public from pe_t_baseclass
+        where baseclass_id = (select baseclass_id from pe_t_user_baseclass where user_id = #{userId})
+    </select>
+</mapper>

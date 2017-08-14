@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.report.dao.ReportTempMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.report.model.ReportTemp">
+        <id column="report_temp_id" property="reportTempId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="is_share" property="isShare" jdbcType="CHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        report_temp_id, create_time, name, user_id, is_share, address
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report_temp
+        where report_temp_id = #{reportTempId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_report_temp
+        where report_temp_id = #{reportTempId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.report.model.ReportTemp">
+        insert into pe_t_report_temp (report_temp_id, create_time, name,
+        user_id, is_share, address
+        )
+        values (#{reportTempId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{name,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR}, #{isShare,jdbcType=CHAR}, #{address,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.report.model.ReportTemp">
+        insert into pe_t_report_temp
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportTempId != null">
+                report_temp_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="isShare != null">
+                is_share,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportTempId != null">
+                #{reportTempId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="isShare != null">
+                #{isShare,jdbcType=CHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.report.model.Report">
+        update pe_t_report_temp
+        <set>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="isShare != null">
+                is_share = #{isShare,jdbcType=CHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where report_temp_id = #{reportTempId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.report.model.Report">
+        update pe_t_report_temp
+        set create_time = #{createTime,jdbcType=TIMESTAMP},
+        name = #{name,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=VARCHAR},
+        is_share = #{isShare,jdbcType=CHAR},
+        address = #{address,jdbcType=VARCHAR}
+        where report_temp_id = #{reportTempId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectReportTemps" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.report.model.Report">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report_temp
+        where 1=1
+        <if test="reportTempId != null">
+            and report_temp_id = #{reportTempId,jdbcType=INTEGER}
+        </if>
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=VARCHAR}
+        </if>
+
+    </select>
+
+
+
+</mapper>

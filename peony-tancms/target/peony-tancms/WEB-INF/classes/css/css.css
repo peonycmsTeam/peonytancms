@@ -1,0 +1,224 @@
+@charset "utf-8";
+/* CSS Document */
+
+#text {
+	font-size:12px;
+	color:#767676;
+	font-family:Arial, Helvetica, sans-serif;
+	line-height:24px;
+}
+
+#line { font:Arial, Helvetica, sans-serif; color:#CCCCCC; }
+
+#text_01 { 
+     font:Arial, Helvetica, sans-serif;
+	 font-size:14px;
+	 color:#767676;
+}
+
+#text_w {
+     font:Arial, Helvetica, sans-serif;
+	 font-size:14px;
+	 color:#FFFFFF;
+}
+
+#text_b01 { 
+     font:Arial, Helvetica, sans-serif;
+	 font-size:16px;
+	 color:#588CBA;
+	 font-weight:bold;
+}
+
+#text_b02 { 
+     font:Arial, Helvetica, sans-serif;
+	 font-size:12px;
+	 color:#588CBA;
+	 font-weight:bold;
+}
+
+#text_title { font:Arial, Helvetica, sans-serif;
+              font-size:12px;
+			  color:#767676;
+			  font-weight:bold;
+}
+
+#text_title_02 { 
+              font: Arial, Helvetica, sans-serif;
+			  font-size:16px;
+			  color:#767676;
+			  font-weight:bold;
+}
+
+#text_list { 
+              font:Arial, Helvetica, sans-serif;
+			  font-size:12px;
+			  color:#767676;
+}
+
+.input01 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 300px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+
+.input02 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 69px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+
+.input03 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 200px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+
+}
+
+.meeting_input {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 60px;
+	width: 500px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+.meeting_info {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 300px;
+	border: 1px solid #EEEEEE;
+	overflow-y:auto;
+	width: 99%;
+	word-wrap:break-word;
+	overflow:hidden;
+	word-break:break-all;
+}
+
+.input05 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 100px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+
+.input06 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 200px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+
+.input07 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 26px;
+	width: 190px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+
+.input08 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #767676;
+	background-color: #FAFAFA;
+	margin: 1px;
+	padding: 1px;
+	height: 250px;
+	width: 970px;
+	border: 1px solid #EEEEEE;
+	line-height: 24px;
+}
+.img_btn {
+	color:#ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-image: url(../images/img_btn.jpg);
+	background-repeat: no-repeat;
+	height: 27px;
+	width: 68px;
+	margin: 0px;
+	padding: 0px;
+	border:0 0 0 0;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	font-style: normal;
+	line-height: normal;
+	cursor: pointer;
+}
+.img_btn2 {
+	color:#ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	background-image: url(../images/img_btn2.jpg);
+	background-repeat: no-repeat;
+	height: 27px;
+	width: 88px;
+	margin: 0px;
+	padding: 0px;
+	border:0 0 0 0;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	font-style: normal;
+	line-height: normal;
+	cursor: pointer;
+}
+.tips_wrap {
+	PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 20px; MARGIN-BOTTOM: 5px; HEIGHT: 24px; PADDING-TOP: 0px;
+}
+P.tips {
+	 BORDER: #e35656 1px solid;PADDING-TOP: 3px;PADDING-LEFT: 5px; PADDING-RIGHT: 5px;PADDING-BOTTOM: 3px; BACKGROUND-COLOR: #fbecec;COLOR: #c00;  
+}
+.inputtext{
+	border:none; background:#fff;
+}
+			

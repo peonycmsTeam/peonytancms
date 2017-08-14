@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.userservice.dao.UserServiceMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.userservice.model.UserService">
+        <id column="userservice_id" property="userserviceId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="keyws_number" property="keywsNumber" jdbcType="INTEGER" />
+        <result column="warn_keyws_number" property="warnKeywsNumber" jdbcType="INTEGER" />
+        <result column="email_number" property="emailNumber" jdbcType="INTEGER" />
+        <result column="phone_number" property="phoneNumber" jdbcType="INTEGER" />
+        <result column="report_time" property="reportTime" jdbcType="VARCHAR" />
+        <result column="mobile_number" property="mobileNumber" jdbcType="INTEGER" />
+        <result column="warn_re_time" property="warnReTime" jdbcType="VARCHAR" />
+        <result column="deadline" property="deadline" jdbcType="TIMESTAMP" />
+        <result column="status" property="status" jdbcType="CHAR" />
+        <result column="send_method" property="sendMethod" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        userservice_id, user_id, keyws_number, warn_keyws_number, email_number, phone_number,
+        report_time, mobile_number, warn_re_time, deadline, status, send_method
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_userservice
+        where userservice_id = #{userserviceId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_userservice
+        where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_userservice
+        where userservice_id = #{userserviceId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.userservice.model.UserService">
+        insert into pe_t_userservice (userservice_id, user_id, keyws_number,
+        warn_keyws_number, email_number, phone_number,
+        report_time, mobile_number, warn_re_time,
+        deadline, status, send_method
+        )
+        values (#{userserviceId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{keywsNumber,jdbcType=INTEGER},
+        #{warnKeywsNumber,jdbcType=INTEGER}, #{emailNumber,jdbcType=INTEGER}, #{phoneNumber,jdbcType=INTEGER},
+        #{reportTime,jdbcType=VARCHAR}, #{mobileNumber,jdbcType=INTEGER}, #{warnReTime,jdbcType=VARCHAR},
+        #{deadline,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}, #{sendMethod,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.userservice.model.UserService">
+        insert into pe_t_userservice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userserviceId != null">
+                userservice_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="keywsNumber != null">
+                keyws_number,
+            </if>
+            <if test="warnKeywsNumber != null">
+                warn_keyws_number,
+            </if>
+            <if test="emailNumber != null">
+                email_number,
+            </if>
+            <if test="phoneNumber != null">
+                phone_number,
+            </if>
+            <if test="reportTime != null">
+                report_time,
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number,
+            </if>
+            <if test="warnReTime != null">
+                warn_re_time,
+            </if>
+            <if test="deadline != null">
+                deadline,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="sendMethod != null">
+                send_method,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userserviceId != null">
+                #{userserviceId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="keywsNumber != null">
+                #{keywsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warnKeywsNumber != null">
+                #{warnKeywsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="emailNumber != null">
+                #{emailNumber,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNumber != null">
+                #{phoneNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reportTime != null">
+                #{reportTime,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber != null">
+                #{mobileNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warnReTime != null">
+                #{warnReTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deadline != null">
+                #{deadline,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+            <if test="sendMethod != null">
+                #{sendMethod,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.userservice.model.UserService">
+        update pe_t_userservice
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="keywsNumber != null">
+                keyws_number = #{keywsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warnKeywsNumber != null">
+                warn_keyws_number = #{warnKeywsNumber,jdbcType=INTEGER},
+            </if>
+            <if test="emailNumber != null">
+                email_number = #{emailNumber,jdbcType=INTEGER},
+            </if>
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber,jdbcType=INTEGER},
+            </if>
+            <if test="reportTime != null">
+                report_time = #{reportTime,jdbcType=VARCHAR},
+            </if>
+            <if test="mobileNumber != null">
+                mobile_number = #{mobileNumber,jdbcType=INTEGER},
+            </if>
+            <if test="warnReTime != null">
+                warn_re_time = #{warnReTime,jdbcType=VARCHAR},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+            <if test="sendMethod != null">
+                send_method = #{sendMethod,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userservice_id = #{userserviceId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.userservice.model.UserService">
+        update pe_t_userservice
+        set user_id = #{userId,jdbcType=INTEGER},
+        keyws_number = #{keywsNumber,jdbcType=INTEGER},
+        warn_keyws_number = #{warnKeywsNumber,jdbcType=INTEGER},
+        email_number = #{emailNumber,jdbcType=INTEGER},
+        phone_number = #{phoneNumber,jdbcType=INTEGER},
+        report_time = #{reportTime,jdbcType=VARCHAR},
+        mobile_number = #{mobileNumber,jdbcType=INTEGER},
+        warn_re_time = #{warnReTime,jdbcType=VARCHAR},
+        deadline = #{deadline,jdbcType=TIMESTAMP},
+        status = #{status,jdbcType=CHAR},
+        send_method = #{sendMethod,jdbcType=VARCHAR}
+        where userservice_id = #{userserviceId,jdbcType=INTEGER}
+    </update>
+</mapper>

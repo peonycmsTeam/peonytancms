@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.event.dao.EventnewsMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.event.model.Eventnews">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="eventId" property="eventid" jdbcType="INTEGER" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="produceDate" property="producedate" jdbcType="TIMESTAMP" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="webSiteplate" property="websiteplate" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="polarity" property="polarity" jdbcType="INTEGER" />
+        <result column="templateId" property="templateid" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="sitePriority" property="sitepriority" jdbcType="INTEGER" />
+        <result column="newsLevel" property="newslevel" jdbcType="INTEGER" />
+        <result column="pageId" property="pageid" jdbcType="VARCHAR" />
+        <result column="publishDate" property="publishdate" jdbcType="TIMESTAMP" />
+        <result column="groupCount" property="groupcount" jdbcType="INTEGER" />
+        <result column="groupSeedId" property="groupseedid" jdbcType="VARCHAR" />
+        <result column="is_mainInfo" property="isMaininfo" jdbcType="VARCHAR" />
+        <result column="provinceId" property="provinceid" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, eventId, summary, title, produceDate, webSite,
+        webSiteplate, url, polarity, templateId,
+        type, sitePriority, newsLevel,
+        pageId, publishDate, groupCount,
+        groupSeedId, is_mainInfo,provinceId
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_eventnews
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        wdyq_eventnews
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        insert into wdyq_eventnews
+        (id, eventId, summary,
+        title, produceDate, webSite,
+        webSiteplate, url,
+        polarity, templateId, type,
+        sitePriority, newsLevel, pageId,
+        publishDate, groupCount,
+        groupSeedId, is_mainInfo)
+        values
+        (#{id,jdbcType=VARCHAR}, #{eventid,jdbcType=INTEGER},
+        #{summary,jdbcType=VARCHAR},
+        #{title,jdbcType=VARCHAR},
+        #{producedate,jdbcType=TIMESTAMP}, #{website,jdbcType=VARCHAR},
+        #{websiteplate,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+
+        #{polarity,jdbcType=INTEGER}, #{templateid,jdbcType=INTEGER},
+        #{type,jdbcType=INTEGER},
+        #{sitepriority,jdbcType=INTEGER},
+        #{newslevel,jdbcType=INTEGER},
+        #{pageid,jdbcType=INTEGER},
+        #{publishdate,jdbcType=TIMESTAMP}, #{groupcount,jdbcType=INTEGER},
+        #{groupseedid,jdbcType=INTEGER}, #{isMaininfo,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        insert into wdyq_eventnews
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="eventid != null">
+                eventId,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="producedate != null">
+                produceDate,
+            </if>
+            <if test="website != null">
+                webSite,
+            </if>
+            <if test="websiteplate != null">
+                webSiteplate,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+
+            <if test="polarity != null">
+                polarity,
+            </if>
+            <if test="templateid != null">
+                templateId,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="sitepriority != null">
+                sitePriority,
+            </if>
+            <if test="newslevel != null">
+                newsLevel,
+            </if>
+            <if test="pageid != null">
+                pageId,
+            </if>
+            <if test="publishdate != null">
+                publishDate,
+            </if>
+            <if test="groupcount != null">
+                groupCount,
+            </if>
+            <if test="groupseedid != null">
+                groupSeedId,
+            </if>
+            <if test="isMaininfo != null">
+                is_mainInfo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="eventid != null">
+                #{eventid,jdbcType=INTEGER},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="producedate != null">
+                #{producedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="websiteplate != null">
+                #{websiteplate,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+
+            <if test="polarity != null">
+                #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="templateid != null">
+                #{templateid,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="sitepriority != null">
+                #{sitepriority,jdbcType=INTEGER},
+            </if>
+            <if test="newslevel != null">
+                #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="pageid != null">
+                #{pageid,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="groupcount != null">
+                #{groupcount,jdbcType=INTEGER},
+            </if>
+            <if test="groupseedid != null">
+                #{groupseedid,jdbcType=INTEGER},
+            </if>
+            <if test="isMaininfo != null">
+                #{isMaininfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        update wdyq_eventnews
+        <set>
+            <if test="eventid != null">
+                eventId = #{eventid,jdbcType=INTEGER},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="producedate != null">
+                produceDate = #{producedate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="website != null">
+                webSite = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="websiteplate != null">
+                webSiteplate = #{websiteplate,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+
+            <if test="polarity != null">
+                polarity = #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="templateid != null">
+                templateId = #{templateid,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="sitepriority != null">
+                sitePriority = #{sitepriority,jdbcType=INTEGER},
+            </if>
+            <if test="newslevel != null">
+                newsLevel = #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="pageid != null">
+                pageId = #{pageid,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                publishDate = #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="groupcount != null">
+                groupCount = #{groupcount,jdbcType=INTEGER},
+            </if>
+            <if test="groupseedid != null">
+                groupSeedId = #{groupseedid,jdbcType=INTEGER},
+            </if>
+            <if test="isMaininfo != null">
+                is_mainInfo = #{isMaininfo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        update
+        wdyq_eventnews
+        set eventId = #{eventid,jdbcType=INTEGER},
+        summary =
+        #{summary,jdbcType=VARCHAR},
+        title = #{title,jdbcType=VARCHAR},
+        produceDate = #{producedate,jdbcType=TIMESTAMP},
+        webSite =
+        #{website,jdbcType=VARCHAR},
+        webSiteplate =
+        #{websiteplate,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        polarity = #{polarity,jdbcType=INTEGER},
+        templateId =
+        #{templateid,jdbcType=INTEGER},
+        type = #{type,jdbcType=INTEGER},
+        sitePriority = #{sitepriority,jdbcType=INTEGER},
+        newsLevel =
+        #{newslevel,jdbcType=INTEGER},
+        pageId = #{pageid,jdbcType=INTEGER},
+        publishDate = #{publishdate,jdbcType=TIMESTAMP},
+        groupCount =
+        #{groupcount,jdbcType=INTEGER},
+        groupSeedId =
+        #{groupseedid,jdbcType=INTEGER},
+        is_mainInfo =
+        #{isMaininfo,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT
+        wdyq_eventnews.id,wdyq_eventnews.eventId,wdyq_eventnews.summary,wdyq_eventnews.title,
+        wdyq_eventnews.produceDate,wdyq_eventnews.webSite,wdyq_eventnews.webSiteplate,wdyq_eventnews.url,
+        wdyq_eventnews.polarity,wdyq_eventnews.templateId,wdyq_eventnews.type,
+        wdyq_eventnews.sitePriority,wdyq_eventnews.newsLevel,wdyq_eventnews.pageId,wdyq_eventnews.publishDate,
+        wdyq_eventnews.groupCount,wdyq_eventnews.groupSeedId,wdyq_eventnews.is_mainInfo,wdyq_eventnews.provinceID
+        from wdyq_eventnews
+        where wdyq_eventnews.id in(select eventnewsID from
+        wdyq_eventnews_region
+        where provinceId=#{provinceid}
+        and regionID like
+        CONCAT ('${regionID}','%')) and
+        wdyq_eventnews.provinceId=#{provinceid}
+
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="polarity != null">
+            and wdyq_eventnews.polarity = #{polarity}
+        </if>
+        <if test="type != null and type != 0">
+            and wdyq_eventnews.type = #{type}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        ORDER BY publishDate DESC
+    </select>
+    <!-- 根据所选时间导出 -->
+    <select id="selectByTimes" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT
+        wdyq_eventnews.id,wdyq_eventnews.eventId,wdyq_eventnews.summary,wdyq_eventnews.title,
+        wdyq_eventnews.produceDate,wdyq_eventnews.webSite,wdyq_eventnews.webSiteplate,wdyq_eventnews.url,
+        wdyq_eventnews.polarity,wdyq_eventnews.templateId,wdyq_eventnews.type,
+        wdyq_eventnews.sitePriority,wdyq_eventnews.newsLevel,wdyq_eventnews.pageId,wdyq_eventnews.publishDate,
+        wdyq_eventnews.groupCount,wdyq_eventnews.groupSeedId,wdyq_eventnews.is_mainInfo,wdyq_eventnews.provinceID
+        from wdyq_eventnews_region,wdyq_eventnews
+        where
+        wdyq_eventnews_region.eventnewsID=wdyq_eventnews.id
+        and
+        wdyq_eventnews_region.provinceId=wdyq_eventnews.provinceId
+        and
+        wdyq_eventnews_region.provinceId=#{provinceid}
+        and <![CDATA[wdyq_eventnews_region.regionID in ( ${regionID} )]]>
+        <if test="eventid != null and eventid != -1">
+            and wdyq_eventnews.eventId=#{eventid}
+        </if>
+        <if test="polarity != null">
+            and wdyq_eventnews.polarity = #{polarity}
+        </if>
+        <if test="type != null and type != 0">
+            and wdyq_eventnews.type = #{type}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        GROUP BY wdyq_eventnews.title
+        ORDER BY publishDate
+        DESC
+    </select>
+    <!-- 首页政务舆情列表 通过title去重 -->
+    <select id="selectGroupByTitle" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        select * from ( SELECT
+        wdyq_eventnews.id,wdyq_eventnews.eventId,wdyq_eventnews.title,
+        wdyq_eventnews.webSite,wdyq_eventnews.url,wdyq_eventnews.publishDate
+        ,wdyq_eventnews.provinceID
+        from wdyq_eventnews
+        where wdyq_eventnews.id
+        in(select eventnewsID from wdyq_eventnews_region
+        where
+        provinceId=#{provinceid}
+        and regionID like CONCAT ('${regionID}','%'))
+        and
+        wdyq_eventnews.provinceId=#{provinceid}
+
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="eventid != null and eventid != -1">
+            and wdyq_eventnews.eventId=#{eventid}
+        </if>
+        <if test="polarity != null">
+            and wdyq_eventnews.polarity = #{polarity}
+        </if>
+        <if test="type != null and type != 0">
+            and wdyq_eventnews.type = #{type}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        and is_mainInfo = 1
+        ORDER BY publishDate DESC
+        limit 20) page GROUP BY
+        title ORDER BY publishDate DESC ;
+    </select>
+
+    <select id="load" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        wdyq_eventnews
+        <where>
+            1=1
+            <if test="id!=null">
+                and id = #{id}
+            </if>
+            and provinceId = #{provinceid}
+        </where>
+    </select>
+
+    <select id="selectEventnewsByGroupseedid" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        wdyq_eventnews
+        <where>
+            provinceId = #{provinceid}
+            and groupSeedId = #{groupseedid}
+            order by publishDate desc
+        </where>
+    </select>
+    <!-- 根据id导出所选项 -->
+    <select id="selectByEventNewsIds" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        wdyq_eventnews
+        where id in
+        <foreach collection="eventnewsIds" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        order by publishDate desc
+    </select>
+    <select id="selectCountByPolarity" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT COUNT(wdyq_eventnews.id)count ,
+        wdyq_eventnews.polarity
+        from wdyq_eventnews_region,wdyq_eventnews
+        where
+        wdyq_eventnews_region.eventnewsID=wdyq_eventnews.id
+        and
+        wdyq_eventnews_region.provinceId=wdyq_eventnews.provinceId
+        and
+        wdyq_eventnews_region.provinceId=#{provinceid}
+        and <![CDATA[wdyq_eventnews_region.regionID in ( ${regionID} )]]>
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        GROUP BY wdyq_eventnews.polarity
+    </select>
+
+    <select id="selectCountByWebSite" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT COUNT(wdyq_eventnews.id)count ,
+        wdyq_eventnews.webSite
+        from wdyq_eventnews_region,wdyq_eventnews
+        where
+        wdyq_eventnews_region.eventnewsID=wdyq_eventnews.id
+        and
+        wdyq_eventnews_region.provinceId=wdyq_eventnews.provinceId
+        and
+        wdyq_eventnews_region.provinceId=#{provinceid}
+        and <![CDATA[wdyq_eventnews_region.regionID in ( ${regionID} )]]>
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        GROUP BY wdyq_eventnews.webSite
+        ORDER BY count DESC LIMIT 0,5
+    </select>
+
+    <select id="selectCountBySrcType" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT COUNT(wdyq_eventnews.id)count ,
+        wdyq_eventnews.type
+        from wdyq_eventnews_region,wdyq_eventnews
+        where
+        wdyq_eventnews_region.eventnewsID=wdyq_eventnews.id
+        and
+        wdyq_eventnews_region.provinceId=wdyq_eventnews.provinceId
+        and
+        wdyq_eventnews_region.provinceId=#{provinceid}
+        and <![CDATA[wdyq_eventnews_region.regionID in ( ${regionID} )]]>
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        GROUP BY wdyq_eventnews.type
+    </select>
+
+    <select id="selectCountByPolarityAndType" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Eventnews">
+        SELECT COUNT(wdyq_eventnews.id)count ,
+        wdyq_eventnews.polarity,wdyq_eventnews.type
+        from wdyq_eventnews_region,wdyq_eventnews
+        where
+        wdyq_eventnews_region.eventnewsID=wdyq_eventnews.id
+        and
+        wdyq_eventnews_region.provinceId=wdyq_eventnews.provinceId
+        and
+        wdyq_eventnews_region.provinceId=#{provinceid}
+        and <![CDATA[wdyq_eventnews_region.regionID in ( ${regionID} )]]>
+        and wdyq_eventnews.type = #{type}
+        <if test="eventArray != null ">
+            and <![CDATA[wdyq_eventnews.eventId in ( ${eventArray} )]]>
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime}']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime}']]>
+        </if>
+        GROUP BY wdyq_eventnews.polarity
+    </select>
+
+    <!-- 查询信息重复量 -->
+    <select id="selectCountByGroupCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT groupCount,provinceId, COUNT(*) count
+        from wdyq_eventnews
+        where is_mainInfo=1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY groupCount,provinceId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询去重前数据 -->
+    <select id="selectCountByProvinceId" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT provinceId, COUNT(*) count
+        from wdyq_eventnews
+        WHERE 1=1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY provinceId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询省份的自媒体数据量 -->
+    <select id="selectCountByProvinceIdMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT provinceId, COUNT(*) count
+        from wdyq_eventnews
+        WHERE 1=1
+        and type not IN(1,5)
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY provinceId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询行业信息重复量 -->
+    <select id="selectCountByGroupCountAndIndustry" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT provinceId,eventId,groupCount,COUNT(*) count
+        from wdyq_eventnews
+        where 1=1
+        AND eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="eventId!=null">
+            and eventId = #{eventId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY eventId,groupCount
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询行业去重前数据 -->
+    <select id="selectCountByIndustry" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT provinceId,eventId,COUNT(*) count
+        from wdyq_eventnews
+        where 1=1
+        AND eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="eventId!=null">
+            and eventId = #{eventId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY eventId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询行业自媒体数据量 -->
+    <select id="selectCountByIndustryMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT provinceId,eventId,COUNT(*) count
+        from wdyq_eventnews
+        where type not IN(1,5)
+        AND eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="eventId!=null">
+            and eventId = #{eventId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY eventId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询groupcount前十的eventnews -->
+    <select id="selectEventnewsByGroupCount" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        wdyq_eventnews
+        where is_mainInfo = 1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        ORDER BY groupCount DESC
+        LIMIT 0,10
+    </select>
+
+    <!-- 统计媒体具体数量 -->
+    <select id="selectCountByEventAndProvinceIdAndMedia" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List" />
+        from wdyq_eventnews
+        where type = 1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="groupSeedId!=null">
+            and groupSeedId = #{groupSeedId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+
+    <!-- 统计各类型自媒体具体数量 -->
+    <select id="selectCountByEventAndProvinceId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT
+        <include refid="Base_Column_List" />
+        from wdyq_eventnews
+        where 1 = 1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="groupSeedId!=null">
+            and groupSeedId = #{groupSeedId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+
+    <!-- 统计各媒体类型的具体数量 -->
+    <select id="CountByMediaType" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT COUNT(*) count,webSite,type
+        from wdyq_eventnews
+        where is_mainInfo = 1
+        <if test="provinceId!=null">
+            and provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY type,webSite
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询市级信息重复量 -->
+    <select id="CountByGroupCountByRegion" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT e.groupCount,count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.is_mainInfo = 1
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY e.groupCount
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询市级去重前数据 -->
+    <select id="CountByRegion" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+
+    <!-- 查询市级的自媒体数据量 -->
+    <select id="CountByRegionIdMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT e.groupCount,count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.type NOT IN(1,5)
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+
+    <!-- 查询市级行业信息重复量 -->
+    <select id="CountByGroupCountAndRegionIdAndIndustry" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT e.eventId, e.groupCount,count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY e.eventId,e.groupCount
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询市级行业去重前数据 -->
+    <select id="CountByRegionIdAndIndustry" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT e.eventId,count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY e.eventId
+        ORDER BY NULL
+
+    </select>
+
+    <!-- 查询市级行业的自媒体数据量 -->
+    <select id="CountByRegionIdAndIndustryMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT e.eventId,count(*) count from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.type not IN(1,5)
+        AND e.eventId BETWEEN 2 AND 32
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        GROUP BY e.eventId
+        ORDER BY NULL
+    </select>
+
+    <!-- 查询市区域groupcount前十的eventnews -->
+    <select id="selectEventnewsByRegionAndGroupCount" resultMap="BaseResultMap" parameterType="java.util.Map">
+        SELECT e.provinceId,e.groupSeedId,e.title from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        AND e.is_mainInfo = 1
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+        ORDER BY e.groupCount DESC
+        LIMIT 0,10
+    </select>
+
+    <!-- 统计市级媒体具体数量 -->
+    <select id="selectCountByEventAndRegionIdAndMedia" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select e.groupSeedId,e.webSite,e.type
+        from wdyq_eventnews e,wdyq_eventnews_region r
+        WHERE e.id = r.eventnewsId
+        and e.type = 1
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="regionId!=null">
+            and r.regionId = #{regionId}
+        </if>
+        <if test="groupSeedId!=null">
+            and e.groupSeedId = #{groupSeedId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+
+    <!-- 统计市级各类型自媒体、媒体具体数量 -->
+    <select id="selectCountByEventAndRegionId" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select e.groupSeedId,e.webSite,e.type
+        from wdyq_eventnews e where e.id in
+        (select eventnewsID from wdyq_eventnews_region r where r.provinceId = #{provinceId} and r.regionId = #{regionId} )
+        <if test="provinceId!=null">
+            and e.provinceId = #{provinceId}
+        </if>
+        <if test="groupSeedId!=null">
+            and e.groupSeedId = #{groupSeedId}
+        </if>
+        <if test="beginTime!=null">
+            and <![CDATA[e.publishDate >= '${beginTime} 00:00:00']]>
+        </if>
+        <if test="endTime!=null">
+            and <![CDATA[e.publishDate <= '${endTime} 23:59:59']]>
+        </if>
+    </select>
+</mapper>

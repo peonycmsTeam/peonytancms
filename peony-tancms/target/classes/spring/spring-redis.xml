@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+    <!-- spring托管Tedis配置管理类 -->
+    <bean id="propertiesConfigManager" class="com.peony.core.common.utils.tedis.PropertiesConfigManager">
+        <constructor-arg index="0" value="config.redis.redis_config"/>
+        <constructor-arg index="1" value="app_name_version"/>
+    </bean>
+
+    <!-- spring托管Tedis工具类 -->
+    <bean id="tedisUtil" class="com.peony.core.common.utils.tedis.TedisUtil">
+        <property name="appName" value="peony"/>
+        <property name="version" value="1"/>
+        <property name="nameSpace" value="1"/>
+    </bean>
+
+    <!-- 默认生成redis缓存key工具类，可根据系统不同业务自定义实现 -->
+    <bean id="genCacheKeyService" class="com.peony.core.common.utils.tedis.DefaultGenCacheKey">
+        <property name="singleQueryIndex" value="load"/> <!-- 查询单个对象规范 -->
+        <property name="multipleQueryIndex" value="select"/>
+    </bean>
+
+    <!-- 默认使用tedis处理redis缓存，可根据系统不同业务自定义使用其他redis java客户端进行缓存 -->
+    <bean id="cacheService" class="com.peony.core.common.utils.tedis.TedisCacheImpl">
+        <property name="cacheEnable" value="true"/> <!-- 缓存总开关 -->
+        <property name="singleCacheEnable" value="true"/> <!-- 单个对象缓存开关，如果总开关不开启则不能生效 -->
+        <property name="singleQueryIndex" value="load"/> <!-- 查询单个对象规范 -->
+        <property name="multipleQueryIndex" value="select"/> <!-- 查询集合规范 -->
+    </bean>
+
+    <!-- 默认处理redis缓存脏数据类，可根据系统不同业务自定义实现 -->
+    <bean id="cacheDataCleanUpService" class="com.peony.core.common.utils.tedis.DefaultCacheDataCleanUp">
+        <property name="cacheEnable" value="true"/> <!-- 缓存总开关 -->
+    </bean>
+
+    <!-- redis缓存拦截，根据缓存规则将数据缓存到redis并根据key获取redis缓存 -->
+    <bean id="tedisMethodInterceptor" class="com.peony.core.common.utils.tedis.TedisMethodInterceptor"/>
+
+    <!-- redis缓存切面，根据缓存规则，符合规则的方法（增 删 改）后，将该类下所有redis缓存全部删除 -->
+    <bean id="tedisMethodAfterAdvice" class="com.peony.core.common.utils.tedis.TedisMethodAfterAdvice"/>
+
+    <!-- redis缓存切面配置 -->
+    <aop:config>
+        <!-- 进入方法前配置，拦截结果，由redis缓存决定是查询mysql数据重新缓存，还是直接使用redis缓存
+        <aop:advisor pointcut="execution(* com.peony..service.*Service.select*(..))" advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.*Service.load*(..))" advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.*Service.find*(..))" advice-ref="tedisMethodInterceptor"/>
+        -->
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.select*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.load*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.find*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.select*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.load*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.find*(..))"
+                     advice-ref="tedisMethodInterceptor"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.insert*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.save*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.add*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.update*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.modify*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.remove*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.del*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchInsert*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchSave*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchAdd*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchUpdate*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchModify*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchDelete*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.SubjectPage*.batchRemove*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.insert*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.save*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.add*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.update*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.modify*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.remove*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.del*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchInsert*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchSave*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchAdd*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchUpdate*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchModify*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchDelete*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+        <aop:advisor pointcut="execution(* com.peony..service.Eventnews*.batchRemove*(..))"
+                     advice-ref="tedisMethodAfterAdvice"/>
+
+        <!-- 进入方法后进行拦截
+        <aop:advisor pointcut="execution(* com.peony..service.*Service.insert*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.save*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.add*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.update*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(*
+            com.peony..service.*Service.modify*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.remove*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.del*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchInsert*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchSave*(..))" advice-ref="tedisMethodAfterAdvice"/> 
+            <aop:advisor pointcut="execution(* com.peony..service.*Service.batchAdd*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchUpdate*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchModify*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchDelete*(..))" advice-ref="tedisMethodAfterAdvice"/> <aop:advisor pointcut="execution(* com.peony..service.*Service.batchRemove*(..))" 
+            advice-ref="tedisMethodAfterAdvice"/> -->
+
+    </aop:config>
+</beans>

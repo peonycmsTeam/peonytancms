@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.login.dao.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.login.model.Role">
+        <id column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        role_id, name, dept_id, create_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_role
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+
+    <!--查询角色列表 分页 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.Role">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_role
+        t
+        where 1=1
+
+        order by ${orderFields} ${order}
+    </select>
+
+    <!--查询角色列表不分页 -->
+    <select id="selectRoles" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.Role">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_role
+        t
+        where 1=1
+        order by create_time desc
+    </select>
+
+    <!--查询根据userId查询角色列表 分页 -->
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        r.role_id, r.name, r.dept_id, r.create_time
+        from
+        pe_t_role r,pe_t_user_role ur
+        where r.role_id=ur.role_id and ur.user_id=#{userId,jdbcType=INTEGER}
+        order by r.create_time desc
+    </select>
+
+</mapper>
