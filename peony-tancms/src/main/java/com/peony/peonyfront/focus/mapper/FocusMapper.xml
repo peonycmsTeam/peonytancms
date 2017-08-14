@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.focus.dao.FocusMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.focus.model.Focus">
+        <id column="id" property="id" jdbcType="CHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="region" property="region" jdbcType="VARCHAR" />
+        <result column="person" property="person" jdbcType="VARCHAR" />
+        <result column="organization" property="organization" jdbcType="VARCHAR" />
+        <result column="keyword1" property="keyword1" jdbcType="VARCHAR" />
+        <result column="keyword2" property="keyword2" jdbcType="VARCHAR" />
+        <result column="keyword3" property="keyword3" jdbcType="VARCHAR" />
+        <result column="keyword4" property="keyword4" jdbcType="VARCHAR" />
+        <result column="keyword5" property="keyword5" jdbcType="VARCHAR" />
+        <result column="keyword6" property="keyword6" jdbcType="VARCHAR" />
+        <result column="keyword7" property="keyword7" jdbcType="VARCHAR" />
+        <result column="keyword8" property="keyword8" jdbcType="VARCHAR" />
+        <result column="keyword9" property="keyword9" jdbcType="VARCHAR" />
+        <result column="keyword10" property="keyword10" jdbcType="VARCHAR" />
+        <result column="startDate" property="startdate" jdbcType="TIMESTAMP" />
+        <result column="endDate" property="enddate" jdbcType="TIMESTAMP" />
+        <result column="deleteFlag" property="deleteflag" jdbcType="INTEGER" />
+        <result column="produceDate" property="producedate" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, name, regionId, region, person, organization, keyword1, keyword2, keyword3, keyword4,
+        keyword5, keyword6, keyword7, keyword8, keyword9, keyword10, startDate, endDate,
+        deleteFlag, produceDate
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_focus
+        where id = #{id,jdbcType=CHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_focus
+        where id = #{id,jdbcType=CHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.focus.model.Focus">
+        insert into pe_t_focus (id, name, regionId,
+        region, person, organization,
+        keyword1, keyword2, keyword3,
+        keyword4, keyword5, keyword6,
+        keyword7, keyword8, keyword9,
+        keyword10, startDate, endDate,
+        deleteFlag, produceDate)
+        values (#{id,jdbcType=CHAR}, #{name,jdbcType=VARCHAR}, #{regionid,jdbcType=INTEGER},
+        #{region,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{organization,jdbcType=VARCHAR},
+        #{keyword1,jdbcType=VARCHAR}, #{keyword2,jdbcType=VARCHAR}, #{keyword3,jdbcType=VARCHAR},
+        #{keyword4,jdbcType=VARCHAR}, #{keyword5,jdbcType=VARCHAR}, #{keyword6,jdbcType=VARCHAR},
+        #{keyword7,jdbcType=VARCHAR}, #{keyword8,jdbcType=VARCHAR}, #{keyword9,jdbcType=VARCHAR},
+        #{keyword10,jdbcType=VARCHAR}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP},
+        #{deleteflag,jdbcType=INTEGER}, #{producedate,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.focus.model.Focus">
+        insert into pe_t_focus
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="region != null">
+                region,
+            </if>
+            <if test="person != null">
+                person,
+            </if>
+            <if test="organization != null">
+                organization,
+            </if>
+            <if test="keyword1 != null">
+                keyword1,
+            </if>
+            <if test="keyword2 != null">
+                keyword2,
+            </if>
+            <if test="keyword3 != null">
+                keyword3,
+            </if>
+            <if test="keyword4 != null">
+                keyword4,
+            </if>
+            <if test="keyword5 != null">
+                keyword5,
+            </if>
+            <if test="keyword6 != null">
+                keyword6,
+            </if>
+            <if test="keyword7 != null">
+                keyword7,
+            </if>
+            <if test="keyword8 != null">
+                keyword8,
+            </if>
+            <if test="keyword9 != null">
+                keyword9,
+            </if>
+            <if test="keyword10 != null">
+                keyword10,
+            </if>
+            <if test="startdate != null">
+                startDate,
+            </if>
+            <if test="enddate != null">
+                endDate,
+            </if>
+            <if test="deleteflag != null">
+                deleteFlag,
+            </if>
+            <if test="producedate != null">
+                produceDate,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=CHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="region != null">
+                #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="person != null">
+                #{person,jdbcType=VARCHAR},
+            </if>
+            <if test="organization != null">
+                #{organization,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword1 != null">
+                #{keyword1,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword2 != null">
+                #{keyword2,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword3 != null">
+                #{keyword3,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword4 != null">
+                #{keyword4,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword5 != null">
+                #{keyword5,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword6 != null">
+                #{keyword6,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword7 != null">
+                #{keyword7,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword8 != null">
+                #{keyword8,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword9 != null">
+                #{keyword9,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword10 != null">
+                #{keyword10,jdbcType=VARCHAR},
+            </if>
+            <if test="startdate != null">
+                #{startdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enddate != null">
+                #{enddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteflag != null">
+                #{deleteflag,jdbcType=INTEGER},
+            </if>
+            <if test="producedate != null">
+                #{producedate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.focus.model.Focus">
+        update pe_t_focus
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                regionId = #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="region != null">
+                region = #{region,jdbcType=VARCHAR},
+            </if>
+            <if test="person != null">
+                person = #{person,jdbcType=VARCHAR},
+            </if>
+            <if test="organization != null">
+                organization = #{organization,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword1 != null">
+                keyword1 = #{keyword1,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword2 != null">
+                keyword2 = #{keyword2,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword3 != null">
+                keyword3 = #{keyword3,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword4 != null">
+                keyword4 = #{keyword4,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword5 != null">
+                keyword5 = #{keyword5,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword6 != null">
+                keyword6 = #{keyword6,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword7 != null">
+                keyword7 = #{keyword7,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword8 != null">
+                keyword8 = #{keyword8,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword9 != null">
+                keyword9 = #{keyword9,jdbcType=VARCHAR},
+            </if>
+            <if test="keyword10 != null">
+                keyword10 = #{keyword10,jdbcType=VARCHAR},
+            </if>
+            <if test="startdate != null">
+                startDate = #{startdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enddate != null">
+                endDate = #{enddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deleteflag != null">
+                deleteFlag = #{deleteflag,jdbcType=INTEGER},
+            </if>
+            <if test="producedate != null">
+                produceDate = #{producedate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.focus.model.Focus">
+        update pe_t_focus
+        set name = #{name,jdbcType=VARCHAR},
+        regionId = #{regionid,jdbcType=INTEGER},
+        region = #{region,jdbcType=VARCHAR},
+        person = #{person,jdbcType=VARCHAR},
+        organization = #{organization,jdbcType=VARCHAR},
+        keyword1 = #{keyword1,jdbcType=VARCHAR},
+        keyword2 = #{keyword2,jdbcType=VARCHAR},
+        keyword3 = #{keyword3,jdbcType=VARCHAR},
+        keyword4 = #{keyword4,jdbcType=VARCHAR},
+        keyword5 = #{keyword5,jdbcType=VARCHAR},
+        keyword6 = #{keyword6,jdbcType=VARCHAR},
+        keyword7 = #{keyword7,jdbcType=VARCHAR},
+        keyword8 = #{keyword8,jdbcType=VARCHAR},
+        keyword9 = #{keyword9,jdbcType=VARCHAR},
+        keyword10 = #{keyword10,jdbcType=VARCHAR},
+        startDate = #{startdate,jdbcType=TIMESTAMP},
+        endDate = #{enddate,jdbcType=TIMESTAMP},
+        deleteFlag = #{deleteflag,jdbcType=INTEGER},
+        produceDate = #{producedate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=CHAR}
+    </update>
+    <!-- 全查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.focus.model.Focus">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_focus
+        <where>
+            <if test="regionid !=null">
+                and regionId like CONCAT('${regionid}','%' )
+            </if>
+        </where>
+        order by produceDate desc
+    </select>
+</mapper>

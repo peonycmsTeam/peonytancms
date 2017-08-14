@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.attention.dao.AttentionInfocntMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.attention.model.AttentionInfocnt">
+        <id column="attention_info_id" property="attentionInfoId" jdbcType="INTEGER" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+        <result column="orderno" property="orderno" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        attention_info_id, content, orderno
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_attention_infocnt
+        where attention_info_id = #{attentionInfoId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_attention_infocnt
+        where attention_info_id = #{attentionInfoId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.attention.model.AttentionInfocnt">
+        insert into pe_t_attention_infocnt (attention_info_id, content, orderno
+        )
+        values (#{attentionInfoId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{orderno,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.attention.model.AttentionInfocnt">
+        insert into pe_t_attention_infocnt
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attentionInfoId != null">
+                attention_info_id,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="orderno != null">
+                orderno,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attentionInfoId != null">
+                #{attentionInfoId,jdbcType=INTEGER},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="orderno != null">
+                #{orderno,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.attention.model.AttentionInfocnt">
+        update pe_t_attention_infocnt
+        <set>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="orderno != null">
+                orderno = #{orderno,jdbcType=INTEGER},
+            </if>
+        </set>
+        where attention_info_id = #{attentionInfoId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.attention.model.AttentionInfocnt">
+        update pe_t_attention_infocnt
+        set content = #{content,jdbcType=VARCHAR},
+        orderno = #{orderno,jdbcType=INTEGER}
+        where attention_info_id = #{attentionInfoId,jdbcType=INTEGER}
+    </update>
+</mapper>

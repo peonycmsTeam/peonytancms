@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.report.dao.ReportConfigMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.report.model.ReportConfig">
+        <id column="report_config_id" property="reportConfigId" jdbcType="INTEGER" />
+        <result column="report_temp_id" property="reportTempId" jdbcType="VARCHAR" />
+        <result column="receive_model" property="receiveModel" jdbcType="CHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="create_time" property="createTime" jdbcType="CHAR" />
+        <result column="report_create" property="reportCreate" jdbcType="CHAR" />
+        <result column="report_send" property="reportSend" jdbcType="CHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        report_config_id, report_temp_id, receive_model, user_id, create_time,report_create,report_send
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report_config
+        where report_config_id = #{reportConfigId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_report_config
+        where report_config_id = #{reportConfigId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.report.model.ReportConfig">
+        insert into pe_t_report_config (report_config_id, report_temp_id, receive_model,
+        user_id, create_time,report_send,report_create)
+        values (#{reportConfigId,jdbcType=INTEGER}, #{reportTempId,jdbcType=VARCHAR}, #{receiveModel,jdbcType=CHAR},
+        #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=CHAR}, #{reportSend,jdbcType=CHAR}, #{reportCreate,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.report.model.ReportConfig">
+        insert into pe_t_report_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="reportConfigId != null">
+                report_config_id,
+            </if>
+            <if test="reportTempId != null">
+                report_temp_id,
+            </if>
+            <if test="receiveModel != null">
+                receive_model,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="reportSend != null">
+                report_send,
+            </if>
+            <if test="reportCreate != null">
+                report_create,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="reportConfigId != null">
+                #{reportConfigId,jdbcType=INTEGER},
+            </if>
+            <if test="reportTempId != null">
+                #{reportTempId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveModel != null">
+                #{receiveModel,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="reportSend != null">
+                #{reportSend,jdbcType=CHAR},
+            </if>
+            <if test="reportCreate != null">
+                #{reportCreate,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.report.model.ReportConfig">
+        update pe_t_report_config
+        <set>
+            <if test="reportTempId != null">
+                report_temp_id = #{reportTempId,jdbcType=VARCHAR},
+            </if>
+            <if test="receiveModel != null">
+                receive_model = #{receiveModel,jdbcType=CHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=CHAR},
+            </if>
+            <if test="reportSend != null">
+                report_send = #{reportSend,jdbcType=CHAR},
+            </if>
+            <if test="reportCreate != null">
+                report_create = #{reportCreate,jdbcType=CHAR},
+            </if>
+        </set>
+        where report_config_id = #{reportConfigId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.report.model.ReportConfig">
+        update pe_t_report_config
+        set report_temp_id = #{reportTempId,jdbcType=VARCHAR},
+        receive_model = #{receiveModel,jdbcType=CHAR},
+        user_id = #{userId,jdbcType=INTEGER},
+        create_time = #{createTime,jdbcType=CHAR},
+        report_send = #{reportSend,jdbcType=CHAR},
+        report_create = #{reportCreate,jdbcType=CHAR}
+        where report_config_id = #{reportConfigId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectReportConfigByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_report_config
+        where 1=1
+        <if test="userId != null">
+            and user_id = #{userId,jdbcType=INTEGER}
+        </if>
+    </select>
+</mapper>

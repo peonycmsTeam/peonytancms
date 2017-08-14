@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.briefreport.dao.BriefreportMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.briefreport.model.Briefreport">
+        <id column="briefreport_id" property="briefreportId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="periods" property="periods" jdbcType="VARCHAR" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        briefreport_id, name, time, user_id, periods, company
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_briefreport
+        where briefreport_id = #{briefreportId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_briefreport
+        where briefreport_id = #{briefreportId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        insert into pe_t_briefreport (briefreport_id, name, time,
+        user_id, periods, company
+        )
+        values (#{briefreportId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+        #{userId,jdbcType=VARCHAR}, #{periods,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        insert into pe_t_briefreport
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="briefreportId != null">
+                briefreport_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="periods != null">
+                periods,
+            </if>
+            <if test="company != null">
+                company,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="briefreportId != null">
+                #{briefreportId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="periods != null">
+                #{periods,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                #{company,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        update pe_t_briefreport
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="periods != null">
+                periods = #{periods,jdbcType=VARCHAR},
+            </if>
+            <if test="company != null">
+                company = #{company,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where briefreport_id = #{briefreportId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        update pe_t_briefreport
+        set name = #{name,jdbcType=VARCHAR},
+        time = #{time,jdbcType=TIMESTAMP},
+        user_id = #{userId,jdbcType=VARCHAR},
+        periods = #{periods,jdbcType=VARCHAR},
+        company = #{company,jdbcType=VARCHAR}
+        where briefreport_id = #{briefreportId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询用户配置的简报列表 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_briefreport
+        <where>
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+            <if test="name!=null">
+                and name like CONCAT('%','${name}','%' )
+            </if>
+        </where>
+        order by time desc
+    </select>
+
+    <!-- 查询用户配置的简报列表 -->
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.briefreport.model.Briefreport">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_briefreport
+        <where>
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by time desc
+    </select>
+
+</mapper>

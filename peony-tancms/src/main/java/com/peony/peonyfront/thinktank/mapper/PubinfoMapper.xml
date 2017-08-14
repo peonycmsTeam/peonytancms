@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.thinktank.dao.PubinfoMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.thinktank.model.Pubinfo">
+        <id column="pubinfo_id" property="pubinfoId" jdbcType="INTEGER" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="subhead" property="subhead" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="CHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="channel_id" property="channelId" jdbcType="VARCHAR" />
+        <result column="state" property="state" jdbcType="CHAR" />
+        <result column="is_top" property="isTop" jdbcType="CHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="subject_recommend" property="subjectRecommend" jdbcType="CHAR" />
+        <result column="case_recommend" property="caseRecommend" jdbcType="CHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        pubinfo_id, title, subhead, time, keywords, type, image, summary, url, channel_id,
+        state, is_top, author, user_id, subject_recommend, case_recommend
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_pubinfo
+        where pubinfo_id = #{pubinfoId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_pubinfo
+        where pubinfo_id = #{pubinfoId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.thinktank.model.Pubinfo">
+        insert into pe_t_pubinfo (pubinfo_id, title, subhead,
+        time, keywords, type,
+        image, summary, url,
+        channel_id, state, is_top,
+        author, user_id, subject_recommend,
+        case_recommend)
+        values (#{pubinfoId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{subhead,jdbcType=VARCHAR},
+        #{time,jdbcType=TIMESTAMP}, #{keywords,jdbcType=VARCHAR}, #{type,jdbcType=CHAR},
+        #{image,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+        #{channelId,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, #{isTop,jdbcType=CHAR},
+        #{author,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{subjectRecommend,jdbcType=CHAR},
+        #{caseRecommend,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.thinktank.model.Pubinfo">
+        insert into pe_t_pubinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="pubinfoId != null">
+                pubinfo_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="subhead != null">
+                subhead,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="keywords != null">
+                keywords,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="image != null">
+                image,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="isTop != null">
+                is_top,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="subjectRecommend != null">
+                subject_recommend,
+            </if>
+            <if test="caseRecommend != null">
+                case_recommend,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="pubinfoId != null">
+                #{pubinfoId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subhead != null">
+                #{subhead,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="keywords != null">
+                #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=CHAR},
+            </if>
+            <if test="image != null">
+                #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=CHAR},
+            </if>
+            <if test="isTop != null">
+                #{isTop,jdbcType=CHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="subjectRecommend != null">
+                #{subjectRecommend,jdbcType=CHAR},
+            </if>
+            <if test="caseRecommend != null">
+                #{caseRecommend,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.thinktank.model.Pubinfo">
+        update pe_t_pubinfo
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subhead != null">
+                subhead = #{subhead,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="keywords != null">
+                keywords = #{keywords,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=CHAR},
+            </if>
+            <if test="image != null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=CHAR},
+            </if>
+            <if test="isTop != null">
+                is_top = #{isTop,jdbcType=CHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="subjectRecommend != null">
+                subject_recommend = #{subjectRecommend,jdbcType=CHAR},
+            </if>
+            <if test="caseRecommend != null">
+                case_recommend = #{caseRecommend,jdbcType=CHAR},
+            </if>
+        </set>
+        where pubinfo_id = #{pubinfoId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.thinktank.model.Pubinfo">
+        update pe_t_pubinfo
+        set title = #{title,jdbcType=VARCHAR},
+        subhead = #{subhead,jdbcType=VARCHAR},
+        time = #{time,jdbcType=TIMESTAMP},
+        keywords = #{keywords,jdbcType=VARCHAR},
+        type = #{type,jdbcType=CHAR},
+        image = #{image,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        channel_id = #{channelId,jdbcType=VARCHAR},
+        state = #{state,jdbcType=CHAR},
+        is_top = #{isTop,jdbcType=CHAR},
+        author = #{author,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
+        subject_recommend = #{subjectRecommend,jdbcType=CHAR},
+        case_recommend = #{caseRecommend,jdbcType=CHAR}
+        where pubinfo_id = #{pubinfoId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询发布信息分页 案例库 -->
+    <select id="selectPubinfoByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_pubinfo
+        where 1=1 and channel_id !=5
+        <if test="channelId != null">
+            and channel_id = #{channelId,jdbcType=INTEGER}
+        </if>
+        <if test="subjectRecommend != null">
+            and subject_recommend = #{subjectRecommend,jdbcType=CHAR}
+        </if>
+        <if test="caseRecommend != null">
+            and case_recommend = #{caseRecommend,jdbcType=CHAR}
+        </if>
+        order by time desc
+    </select>
+
+    <!-- 处置经验 -->
+    <select id="selectPubByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_pubinfo
+        where 1=1 and channel_id =5 order by time desc
+    </select>
+
+
+    <!-- 点击标题，查看详细 -->
+    <select id="selectContentByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT pubinfo.*,cnt.content content
+        FROM pe_t_pubinfo pubinfo LEFT JOIN pe_t_pubinfo_cnt cnt ON pubinfo.pubinfo_id=cnt.pubinfo_id
+        WHERE pubinfo.pubinfo_id = #{pubinfoId,jdbcType=INTEGER}
+    </select>
+
+    <!-- 查询发布信息 首页专题推荐 及案例推荐 -->
+    <select id="selectPubinfos" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.thinktank.model.Pubinfo">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_pubinfo where 1=1
+        <if test="channelId != null">
+            and(channel_id in (SELECT channel_id from pe_t_channel t where t.channel_pid=#{channelId,jdbcType=INTEGER}) or channel_id=9)
+        </if>
+        <if test="subjectRecommend != null">
+            and subject_recommend = #{subjectRecommend,jdbcType=CHAR}
+        </if>
+        <if test="caseRecommend != null">
+            and case_recommend = #{caseRecommend,jdbcType=CHAR}
+        </if>
+        order by time desc
+    </select>
+</mapper>

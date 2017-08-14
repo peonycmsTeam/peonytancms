@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.mediacount.dao.MediaCountMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.mediacount.model.MediaCount">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="regionName" property="regionname" jdbcType="VARCHAR" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="CHAR" />
+        <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="month" property="month" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="countMumber" property="countmumber" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, regionId, regionName, webSite, type, date, month, year,
+        countMumber
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_media_count
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        pe_t_media_count
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.mediacount.model.MediaCount">
+        insert into pe_t_media_count
+        (id, regionId, regionName,
+        webSite, type, date,
+        month, year, countMumber
+        )
+        values (#{id,jdbcType=VARCHAR}, #{regionid,jdbcType=INTEGER},
+        #{regionname,jdbcType=VARCHAR},
+        #{website,jdbcType=VARCHAR},
+        #{type,jdbcType=CHAR}, #{date,jdbcType=VARCHAR},
+        #{month,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR},
+        #{countmumber,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.mediacount.model.MediaCount">
+        insert into pe_t_media_count
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="regionname != null">
+                regionName,
+            </if>
+            <if test="website != null">
+                webSite,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="month != null">
+                month,
+            </if>
+            <if test="year != null">
+                year,
+            </if>
+            <if test="countmumber != null">
+                countMumber,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=TINYINT},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="countmumber != null">
+                #{countmumber,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.mediacount.model.MediaCount">
+        update pe_t_media_count
+        <set>
+            <if test="regionid != null">
+                regionId = #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                regionName = #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                webSite = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=TINYINT},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                month = #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                year = #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="countmumber != null">
+                countMumber = #{countmumber,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.mediacount.model.MediaCount">
+        update
+        pe_t_media_count
+        set regionId = #{regionid,jdbcType=INTEGER},
+        regionName = #{regionname,jdbcType=VARCHAR},
+        webSite =
+        #{website,jdbcType=VARCHAR},
+        type = #{type,jdbcType=TINYINT},
+        date =
+        #{date,jdbcType=VARCHAR},
+        month = #{month,jdbcType=VARCHAR},
+        year =
+        #{year,jdbcType=VARCHAR},
+        countMumber = #{countmumber,jdbcType=INTEGER}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectMediaoneByDate" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select type, sum(countMumber) countMumber from
+        pe_t_media_count where month = #{month,jdbcType=VARCHAR} and
+        type &lt;
+        8
+        GROUP BY type
+        ORDER BY type
+    </select>
+
+    <select id="selectMediaoneByDateZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select type, sum(countMumber) countMumber from
+		pe_t_media_count where DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date and
+		type <
+		8
+		GROUP BY type
+		ORDER BY type
+		]]>
+
+    </select>
+
+    <select id="selectMediaoneByDateYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select type, sum(countMumber) countMumber from
+        pe_t_media_count where month = #{month,jdbcType=VARCHAR}-1 and
+        type
+        &lt;
+        8
+        GROUP BY type
+        ORDER BY type
+    </select>
+    <select id="selectMediaByDate" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 1 and MONTH=#{month,jdbcType=VARCHAR}
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaByDateZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 1 and DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+    <select id="selectMediaByDateYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 1 and MONTH=#{month,jdbcType=VARCHAR}-1
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBbsByDate" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 2 and MONTH=#{month,jdbcType=VARCHAR}
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBbsByDateZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 2 and DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+    <select id="selectMediaBbsByDateYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 2 and MONTH=#{month,jdbcType=VARCHAR}-1
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBlogByDate" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 4 and MONTH=#{month,jdbcType=VARCHAR}
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+
+    <select id="selectMediaBlogByDateZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 4 and DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+    <select id="selectMediaBlogByDateYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 4 and MONTH=#{month,jdbcType=VARCHAR}-1
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectWeixinByDates" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select type, sum(countMumber) countMumber from
+        pe_t_media_count where month = #{month,jdbcType=VARCHAR} and
+        type &lt;
+        8
+        and regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY type
+        ORDER BY type
+    </select>
+
+    <select id="selectWeixinByDatesZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select type, sum(countMumber) countMumber from
+		pe_t_media_count where  DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date and
+		type <
+		8
+		and regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY type
+		ORDER BY type
+]]>
+    </select>
+
+    <select id="selectWeixinByDatesYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select type, sum(countMumber) countMumber from
+        pe_t_media_count where month = #{month,jdbcType=VARCHAR}-1 and
+        type
+        &lt;
+        8
+        and regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY type
+        ORDER BY
+        type
+    </select>
+
+
+    <select id="selectMediaByDateSheng" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 1 and MONTH=#{month,jdbcType=VARCHAR} and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+
+    <select id="selectMediaByDateShengZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 1 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date and
+		regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+
+    <select id="selectMediaByDateShengYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 1 and MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBbsByDateSheng" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 2 and MONTH=#{month,jdbcType=VARCHAR}
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBbsByDateShengZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 2 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		and
+		regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+    <select id="selectMediaBbsByDateShengYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 2 and MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaBlogByDateSheng" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 4 and MONTH=#{month,jdbcType=VARCHAR}
+        and
+        regionId like CONCAT('${regionid}','%' )
+
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+
+    <select id="selectMediaBlogByDateShengZhou" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+		<![CDATA[
+		select webSite,sum(countMumber) countMumber from
+		pe_t_media_count
+		WHERE type = 4 and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		and
+		regionId like CONCAT('${regionid}','%' )
+
+		GROUP BY webSite
+		ORDER BY
+		sum(countMumber) DESC LIMIT 10
+		]]>
+    </select>
+
+    <select id="selectMediaBlogByDateShengYue" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select webSite,sum(countMumber) countMumber from
+        pe_t_media_count
+        WHERE type = 4 and MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        regionId like CONCAT('${regionid}','%' )
+
+        GROUP BY webSite
+        ORDER BY
+        sum(countMumber) DESC LIMIT 10
+    </select>
+    <select id="selectMediaCountByDate" parameterType="com.peony.peonyfront.mediacount.model.MediaCount" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_media_count
+        where date = #{date,jdbcType=VARCHAR}
+    </select>
+</mapper>

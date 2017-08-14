@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.peony.peonyfront.regionindex.dao.RegionindexMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.regionindex.model.Regionindex">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="regionId" property="regionid" jdbcType="INTEGER" />
+        <result column="regionName" property="regionname" jdbcType="VARCHAR" />
+        <result column="date" property="date" jdbcType="VARCHAR" />
+        <result column="month" property="month" jdbcType="VARCHAR" />
+        <result column="year" property="year" jdbcType="VARCHAR" />
+        <result column="heatIndex" property="heatindex" jdbcType="REAL" />
+        <result column="sensitiveIndex" property="sensitiveindex" jdbcType="REAL" />
+        <result column="focusIndex" property="focusindex" jdbcType="REAL" />
+        <result column="compositeIndex" property="compositeindex" jdbcType="REAL" />
+        <result column="type" property="type" jdbcType="CHAR" />
+        <result property="beginTime" />
+        <result property="endTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, regionId, regionName, date, month, year, heatIndex,
+        sensitiveIndex,
+        focusIndex,
+        compositeIndex, type
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_region_index
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from
+        pe_t_region_index
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        insert into pe_t_region_index
+        (id, regionId, regionName,
+        date, month, year,
+        heatIndex, sensitiveIndex,
+        focusIndex,
+        compositeIndex, type)
+        values (#{id,jdbcType=VARCHAR},
+        #{regionid,jdbcType=INTEGER},
+        #{regionname,jdbcType=VARCHAR},
+        #{date,jdbcType=VARCHAR}, #{month,jdbcType=VARCHAR},
+        #{beginTime},
+        #{endTime},
+        #{year,jdbcType=VARCHAR},
+        #{heatindex,jdbcType=REAL},
+        #{sensitiveindex,jdbcType=REAL},
+        #{focusindex,jdbcType=REAL},
+        #{compositeindex,jdbcType=REAL}, #{type,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        insert into pe_t_region_index
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="regionid != null">
+                regionId,
+            </if>
+            <if test="regionname != null">
+                regionName,
+            </if>
+            <if test="date != null">
+                date,
+            </if>
+            <if test="month != null">
+                month,
+            </if>
+            <if test="year != null">
+                year,
+            </if>
+            <if test="heatindex != null">
+                heatIndex,
+            </if>
+            <if test="sensitiveindex != null">
+                sensitiveIndex,
+            </if>
+            <if test="focusindex != null">
+                focusIndex,
+            </if>
+            <if test="compositeindex != null">
+                compositeIndex,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="heatindex != null">
+                #{heatindex,jdbcType=REAL},
+            </if>
+            <if test="sensitiveindex != null">
+                #{sensitiveindex,jdbcType=REAL},
+            </if>
+            <if test="focusindex != null">
+                #{focusindex,jdbcType=REAL},
+            </if>
+            <if test="compositeindex != null">
+                #{compositeindex,jdbcType=REAL},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        update pe_t_region_index
+        <set>
+            <if test="regionid != null">
+                regionId = #{regionid,jdbcType=INTEGER},
+            </if>
+            <if test="regionname != null">
+                regionName = #{regionname,jdbcType=VARCHAR},
+            </if>
+            <if test="date != null">
+                date = #{date,jdbcType=VARCHAR},
+            </if>
+            <if test="month != null">
+                month = #{month,jdbcType=VARCHAR},
+            </if>
+            <if test="year != null">
+                year = #{year,jdbcType=VARCHAR},
+            </if>
+            <if test="heatindex != null">
+                heatIndex = #{heatindex,jdbcType=REAL},
+            </if>
+            <if test="sensitiveindex != null">
+                sensitiveIndex = #{sensitiveindex,jdbcType=REAL},
+            </if>
+            <if test="focusindex != null">
+                focusIndex = #{focusindex,jdbcType=REAL},
+            </if>
+            <if test="compositeindex != null">
+                compositeIndex = #{compositeindex,jdbcType=REAL},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        update
+        pe_t_region_index
+        set regionId = #{regionid,jdbcType=INTEGER},
+        regionName = #{regionname,jdbcType=VARCHAR},
+        date =
+        #{date,jdbcType=VARCHAR},
+        date =
+        #{"beginTime",jdbcType=VARCHAR},
+        date =
+        #{"endTime",jdbcType=VARCHAR},
+        month = #{month,jdbcType=VARCHAR},
+        year =
+        #{year,jdbcType=VARCHAR},
+        heatIndex = #{heatindex,jdbcType=REAL},
+        sensitiveIndex = #{sensitiveindex,jdbcType=REAL},
+        focusIndex =
+        #{focusindex,jdbcType=REAL},
+        compositeIndex =
+        #{compositeindex,jdbcType=REAL},
+        type = #{type,jdbcType=CHAR}
+        where id =
+        #{id,jdbcType=VARCHAR}
+    </update>
+    <select id="selectRegionIndex" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName, cast(ROUND(avg(heatindex),2)as
+        decimal(10,2))
+        heatindex,cast(ROUND(avg(sensitiveindex),2)as
+        decimal(10,2)) sensitiveindex,cast(ROUND(avg(focusindex),2)as
+        decimal(10,2))
+        focusindex,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from pe_t_region_index
+        where type =1 and
+        month=#{month} and regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY
+        regionName ORDER BY
+        SUM(compositeIndex) DESC
+    </select>
+
+    <select id="selectRegionIndexZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select regionName, cast(ROUND(avg(heatindex),2)as
+		decimal(10,2))
+		heatindex,cast(ROUND(avg(sensitiveindex),2)as
+		decimal(10,2)) sensitiveindex,cast(ROUND(avg(focusindex),2)as
+		decimal(10,2))
+		focusindex,cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		from pe_t_region_index
+		where type ='1' and 
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <=date
+		and
+		regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY regionName ORDER
+		BY
+		SUM(compositeIndex) DESC
+]]>
+    </select>
+
+    <select id="selectRegionIndexYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName, cast(ROUND(avg(heatindex),2)as
+        decimal(10,2))
+        heatindex,cast(ROUND(avg(sensitiveindex),2)as
+        decimal(10,2)) sensitiveindex,cast(ROUND(avg(focusindex),2)as
+        decimal(10,2))
+        focusindex,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from pe_t_region_index
+        where type =1 and
+        month=#{month}-1 and regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY
+        regionName ORDER BY
+        SUM(compositeIndex) DESC
+    </select>
+    <select id="selecttendency" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select date_format(date,'%c月-%d日') date, sum(compositeIndex)
+        compositeIndex from
+        pe_t_region_index where type=1 and month
+        =#{month,jdbcType=VARCHAR}
+        and regionId like
+        CONCAT('${regionid}','%' )
+        GROUP
+        BY date ORDER BY
+        date
+    </select>
+
+    <select id="selecttendencyZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select date_format(date,'%c月-%d日') date, sum(compositeIndex)
+		compositeIndex
+		from
+		pe_t_region_index where type=1 and DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date
+		and regionId like
+		CONCAT('${regionid}','%' )
+		GROUP
+		BY date
+		ORDER BY
+		date
+		]]>
+    </select>
+
+    <select id="selecttendencyYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select date_format(date,'%c月-%d日') date, sum(compositeIndex)
+        compositeIndex from
+        pe_t_region_index where type=1 and month
+        =#{month,jdbcType=VARCHAR}-1
+        and regionId like
+        CONCAT('${regionid}','%'
+        )
+        GROUP
+        BY date ORDER BY
+        date
+    </select>
+    <select id="selectGrowthRate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,avg(compositeIndex)
+        compositeindex
+        from
+        pe_t_region_index
+        where month=#{month,jdbcType=VARCHAR} and type='1'
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionName
+
+    </select>
+    <select id="selectGrowthRateZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select regionName,avg(compositeIndex)
+		compositeindex
+		from
+		pe_t_region_index
+		where DATE_SUB(CURDATE(), INTERVAL 7
+		DAY) <= date and type='1'
+		and
+		regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY regionName
+	]]>
+
+
+    </select>
+    <select id="selectGrowthRateYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,avg(compositeIndex)
+        compositeindex
+        from
+        pe_t_region_index
+        where month=#{month,jdbcType=VARCHAR} and type='1'
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionName
+
+    </select>
+    <select id="selectGrowthRates" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,avg(compositeIndex)
+        compositeindex
+        from
+        pe_t_region_index
+        where month=#{month,jdbcType=VARCHAR} and type='1'
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionName
+    </select>
+
+    <select id="selectGrowthRatesZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select date_format(date,'%c月-%d日') date,
+        regionName,avg(compositeIndex)
+        compositeindex
+        from
+        pe_t_region_index
+        where date BETWEEN #{endTime} and #{beginTime} and type='1'
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY date
+
+    </select>
+
+    <select id="selectGrowthRatesYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,avg(compositeIndex)
+        compositeindex
+        from
+        pe_t_region_index
+        where month=#{month,jdbcType=VARCHAR} and type='1'
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionName
+    </select>
+
+    <select id="selectRegionChina" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName, cast(ROUND(avg(heatindex),2)as
+        decimal(10,2))
+        heatindex,cast(ROUND(avg(sensitiveindex),2)as
+        decimal(10,2))
+        sensitiveindex,cast(ROUND(avg(focusindex),2)as
+        decimal(10,2))
+        focusindex,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2))
+        compositeindex
+        from pe_t_region_index
+        where type =2 and
+        month=#{month,jdbcType=VARCHAR}
+        GROUP BY regionName
+        ORDER BY
+        SUM(compositeIndex) DESC LIMIT 10
+    </select>
+
+    <select id="selectRegionChinaZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select regionName, cast(ROUND(avg(heatindex),2)as
+		decimal(10,2))
+		heatindex,cast(ROUND(avg(sensitiveindex),2)as
+		decimal(10,2)) sensitiveindex,cast(ROUND(avg(focusindex),2)as
+		decimal(10,2))
+		focusindex,cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		from pe_t_region_index
+		where type = '2' and
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		GROUP BY
+		regionName
+		ORDER BY
+		SUM(compositeIndex) DESC LIMIT 10
+		]]>
+
+    </select>
+
+    <select id="selectRegionChinaYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName, cast(ROUND(avg(heatindex),2)as
+        decimal(10,2))
+        heatindex,cast(ROUND(avg(sensitiveindex),2)as
+        decimal(10,2)) sensitiveindex,cast(ROUND(avg(focusindex),2)as
+        decimal(10,2))
+        focusindex,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from pe_t_region_index
+        where type =2 and
+        month=#{month,jdbcType=VARCHAR}-1
+        GROUP BY regionName
+        ORDER BY
+        SUM(compositeIndex) DESC LIMIT 10
+    </select>
+
+
+    <select id="selectGrowthRateChina" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname,
+        cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where
+        month=#{month,jdbcType=VARCHAR} and
+        type='2'
+        GROUP BY regionName
+
+    </select>
+
+    <select id="selectGrowthRateChinaZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select regionname,
+		cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		from
+		pe_t_region_index
+		where
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date and
+		type='2'
+		GROUP BY
+		regionName
+]]>
+    </select>
+
+    <select id="selectGrowthRateChinaYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname,
+        cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where
+        month=#{month,jdbcType=VARCHAR} and
+        type='2'
+        GROUP BY regionName
+
+    </select>
+    <select id="selectGrowthRatesChina" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname,
+        cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where
+        month=#{month,jdbcType=VARCHAR} and
+        type='2'
+        GROUP BY regionName
+
+    </select>
+
+    <select id="selectGrowthRatesChinaZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname,
+        cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where
+        date BETWEEN
+        #{endTime} and #{beginTime} and
+        type='2'
+        GROUP BY
+        regionName
+    </select>
+
+    <select id="selectGrowthRatesChinaYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname,
+        cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where
+        month=#{month,jdbcType=VARCHAR} and
+        type='2'
+        GROUP BY regionName
+
+    </select>
+
+    <select id="selectChinaDistribute" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname, cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        FROM pe_t_region_index where
+        MONTH=#{month,jdbcType=VARCHAR}
+        and
+        type=2 GROUP BY regionName
+        ORDER BY
+        compositeIndex DESC
+    </select>
+
+
+    <select id="selectChinaDistributeZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+	select regionname, cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		FROM pe_t_region_index where
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		and
+		type=2 GROUP BY
+		regionName
+		ORDER BY
+		compositeIndex DESC
+		]]>
+
+    </select>
+
+
+    <select id="selectChinaDistributeYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname, cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        FROM pe_t_region_index where
+        MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        type=2 GROUP BY regionName
+        ORDER BY
+        compositeIndex DESC
+    </select>
+
+    <select id="selecttendencychina" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select date_format(date,'%c月-%d日')date, sum(compositeIndex)
+        compositeIndex from
+        pe_t_region_index where type=2 and month
+        =#{month,jdbcType=VARCHAR} GROUP
+        BY date ORDER BY
+        date
+    </select>
+
+    <select id="selecttendencychinaZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+		select date_format(date,'%c月-%d日')date, sum(compositeIndex)
+		compositeIndex from
+		pe_t_region_index where type=2 and DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+		<= date GROUP
+		BY date ORDER BY
+		date
+		]]>
+
+    </select>
+
+    <select id="selecttendencychinaYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select date_format(date,'%c月-%d日') date, sum(compositeIndex)
+        compositeIndex from
+        pe_t_region_index where type=2 and month
+        =#{month,jdbcType=VARCHAR}-1 GROUP
+        BY date ORDER BY
+        date
+    </select>
+
+
+
+    <select id="selecttendencychina1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where MONTH
+        =#{month,jdbcType=VARCHAR}
+        and
+        type=2 GROUP BY regionName
+        ORDER BY
+        SUM(compositeIndex) DESC
+        LIMIT 10
+    </select>
+    <select id="selecttendencychinaZhou1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+select regionName,cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		from
+		pe_t_region_index
+		where
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		and
+		type=2 GROUP BY
+		regionName
+		ORDER BY
+		SUM(compositeIndex) DESC
+		LIMIT 10		
+		]]>
+
+    </select>
+    <select id="selecttendencychinaYue1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionName,cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        from
+        pe_t_region_index
+        where MONTH
+        =#{month,jdbcType=VARCHAR}-1
+        and
+        type=2 GROUP BY regionName
+        ORDER BY
+        SUM(compositeIndex) DESC
+        LIMIT 10
+    </select>
+
+    <select id="selectShengDistribute" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname, cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        FROM pe_t_region_index where
+        MONTH=#{month,jdbcType=VARCHAR}
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        and
+        type=1 GROUP BY regionName
+        ORDER BY
+        compositeIndex DESC
+    </select>
+
+    <select id="selectShengDistributeZhou" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+select regionname, cast(ROUND(avg(compositeIndex),2)as
+		decimal(10,2)) compositeindex
+		FROM pe_t_region_index where
+		DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date
+		and
+		regionId like
+		CONCAT('${regionid}','%' )
+		and
+		type=1 GROUP BY regionName
+		ORDER BY
+		compositeIndex DESC
+				]]>
+
+    </select>
+
+    <select id="selectShengDistributeYue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname, cast(ROUND(avg(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        FROM pe_t_region_index where
+        MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        and
+        type=1 GROUP BY regionName
+        ORDER BY
+        compositeIndex DESC
+    </select>
+    <select id="Yue" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname, cast(ROUND(sum(compositeIndex),2)as
+        decimal(10,2)) compositeindex
+        FROM pe_t_region_index where
+        MONTH=#{month,jdbcType=VARCHAR}-1
+        and
+        regionId like
+        CONCAT('${regionid}','%' )
+        and
+        type=1 GROUP BY regionName
+        ORDER BY
+        compositeIndex DESC
+    </select>
+
+    <select id="selectShengDistribute1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname , avg(compositeindex) compositeindex
+        from
+        pe_t_region_index where MONTH=#{month,jdbcType=VARCHAR} and type=1
+        AND regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionId ORDER BY
+        avg(compositeindex) DESC LIMIT 10
+    </select>
+
+    <select id="selectShengDistributeZhou1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+		<![CDATA[
+select regionname , avg(compositeindex) compositeindex
+		from
+		pe_t_region_index where DATE_SUB(CURDATE(), INTERVAL 7 DAY) <=
+		date and type=1
+		AND regionId like
+		CONCAT('${regionid}','%' )
+		GROUP BY
+		regionId ORDER BY
+		avg(compositeindex) DESC LIMIT 10
+	]]>
+
+    </select>
+
+
+    <select id="selectShengDistributeYue1" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select regionname , avg(compositeindex) compositeindex
+        from
+        pe_t_region_index where MONTH=#{month,jdbcType=VARCHAR}-'1' and
+        type=1
+        AND regionId like
+        CONCAT('${regionid}','%' )
+        GROUP BY regionId
+        ORDER BY
+        avg(compositeindex) DESC LIMIT 10
+    </select>
+
+
+
+    <select id="selectRegionIndexByDate" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.regionindex.model.Regionindex">
+        select
+        <include refid="Base_Column_List" />
+        from
+        pe_t_region_index
+        where date = #{date,jdbcType=VARCHAR}
+    </select>
+
+
+
+</mapper>

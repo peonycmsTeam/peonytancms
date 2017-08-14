@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.login.dao.PhoneLoginMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.login.model.PhoneLogin">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="mac_id" property="macId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="bind_type" property="bindType" jdbcType="VARCHAR" />
+        <result column="dnd_time" property="dndTime" jdbcType="VARCHAR" />
+        <result column="push_switch" property="pushSwitch" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, user_id, mac_id, type, bind_type, dnd_time, push_switch
+    </sql>
+
+    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.PhoneLogin">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_phone_login
+        <where>
+            1 = 1
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="macId != null">
+                and mac_id = #{macId}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="pushSwitch != null">
+                and push_switch = #{pushSwitch}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_phone_login
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_phone_login
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteByPrimaryMacid" parameterType="java.lang.String">
+        delete from pe_t_phone_login
+        where mac_id = #{macId,jdbcType=VARCHAR}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.login.model.PhoneLogin">
+        insert into pe_t_phone_login (id, user_id, mac_id,
+        type, bind_type, dnd_time,
+        push_switch)
+        values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{macId,jdbcType=VARCHAR},
+        #{type,jdbcType=VARCHAR}, #{bindType,jdbcType=VARCHAR}, #{dndTime,jdbcType=VARCHAR},
+        #{pushSwitch,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.login.model.PhoneLogin">
+        insert into pe_t_phone_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="macId != null">
+                mac_id,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="bindType != null">
+                bind_type,
+            </if>
+            <if test="dndTime != null">
+                dnd_time,
+            </if>
+            <if test="pushSwitch != null">
+                push_switch,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="macId != null">
+                #{macId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="bindType != null">
+                #{bindType,jdbcType=VARCHAR},
+            </if>
+            <if test="dndTime != null">
+                #{dndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="pushSwitch != null">
+                #{pushSwitch,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.login.model.PhoneLogin">
+        update pe_t_phone_login
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="macId != null">
+                mac_id = #{macId,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            <if test="bindType != null">
+                bind_type = #{bindType,jdbcType=VARCHAR},
+            </if>
+            <if test="dndTime != null">
+                dnd_time = #{dndTime,jdbcType=VARCHAR},
+            </if>
+            <if test="pushSwitch != null">
+                push_switch = #{pushSwitch,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.login.model.PhoneLogin">
+        update pe_t_phone_login
+        set user_id = #{userId,jdbcType=INTEGER},
+        mac_id = #{macId,jdbcType=VARCHAR},
+        type = #{type,jdbcType=VARCHAR},
+        bind_type = #{bindType,jdbcType=VARCHAR},
+        dnd_time = #{dndTime,jdbcType=VARCHAR},
+        push_switch = #{pushSwitch,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.region.dao.RegionKeywordsMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.region.model.RegionKeywords">
+        <id column="regionId" property="regionid" jdbcType="VARCHAR" />
+        <result column="regionwords" property="regionwords" jdbcType="VARCHAR" />
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="content" property="content" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        regionId, regionwords, modify_time, user_name, content
+    </sql>
+
+    <select id="selectByRegionId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region_keywords
+        where regionId like CONCAT ('${regionid}','%')
+    </select>
+
+    <select id="selectByPK" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.region.model.RegionKeywords">
+        select
+        <include refid="Base_Column_List" />
+        from wdyq_region_keywords
+        where  <![CDATA[regionId in ( ${regionwords} )]]>
+    </select>
+</mapper>

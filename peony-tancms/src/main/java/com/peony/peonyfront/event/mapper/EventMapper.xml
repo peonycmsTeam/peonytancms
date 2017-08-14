@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.event.dao.EventMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.event.model.Event">
+        <id column="eventID" property="eventid" jdbcType="INTEGER" />
+        <result column="eventName" property="eventname" jdbcType="VARCHAR" />
+        <result column="parentEventID" property="parenteventid" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+        <result column="is_public" property="isPublic" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        eventID, eventName, parentEventID, status,is_public
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_event_en
+        where eventID = #{eventid,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_event_en
+        where eventID = #{eventid,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.event.model.Event">
+        insert into pe_t_event_en (eventID, eventName, parentEventID,
+        status)
+        values (#{eventid,jdbcType=INTEGER}, #{eventname,jdbcType=VARCHAR}, #{parenteventid,jdbcType=INTEGER},
+        #{status,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.event.model.Event">
+        insert into pe_t_event_en
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eventid != null">
+                eventID,
+            </if>
+            <if test="eventname != null">
+                eventName,
+            </if>
+            <if test="parenteventid != null">
+                parentEventID,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eventid != null">
+                #{eventid,jdbcType=INTEGER},
+            </if>
+            <if test="eventname != null">
+                #{eventname,jdbcType=VARCHAR},
+            </if>
+            <if test="parenteventid != null">
+                #{parenteventid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.event.model.Event">
+        update pe_t_event_en
+        <set>
+            <if test="eventname != null">
+                eventName = #{eventname,jdbcType=VARCHAR},
+            </if>
+            <if test="parenteventid != null">
+                parentEventID = #{parenteventid,jdbcType=INTEGER},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
+            </if>
+        </set>
+        where eventID = #{eventid,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.event.model.Event">
+        update pe_t_event_en
+        set eventName = #{eventname,jdbcType=VARCHAR},
+        parentEventID = #{parenteventid,jdbcType=INTEGER},
+        status = #{status,jdbcType=INTEGER}
+        where eventID = #{eventid,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectEventByEventIdArray" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Event">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_event_en
+        <where>
+            <if test="eventArray !=null and eventArray !='' ">
+    		<![CDATA[eventID in ( ${eventArray} )]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectEventByIsPublic" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Event">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_event_en
+        <where>
+            <if test="isPublic != null">
+                is_public = #{isPublic}
+            </if>
+        </where>
+    </select>
+
+    <select id="findEvent" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.event.model.Event">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_event_en
+        where parentEventID = -1
+        AND eventID BETWEEN 2 AND 32
+    </select>
+</mapper>

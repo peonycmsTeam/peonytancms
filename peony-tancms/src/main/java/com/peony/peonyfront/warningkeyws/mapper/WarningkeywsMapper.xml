@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.warningkeyws.dao.WarningkeywsMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        <id column="warningkeyws_id" property="warningkeywsId" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="area" property="area" jdbcType="VARCHAR" />
+        <result column="main_keyws" property="mainKeyws" jdbcType="VARCHAR" />
+        <result column="deputy_keyws" property="deputyKeyws" jdbcType="VARCHAR" />
+        <result column="ruleout_keyws" property="ruleoutKeyws" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        warningkeyws_id, user_id, name, area, main_keyws, deputy_keyws, ruleout_keyws
+    </sql>
+
+    <!-- 分页查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_warningkeyws
+        <where>
+            1=1
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_warningkeyws
+        where warningkeyws_id = #{warningkeywsId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_warningkeyws
+        where warningkeyws_id = #{warningkeywsId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        insert into pe_t_warningkeyws (warningkeyws_id, user_id, name,
+        area, main_keyws, deputy_keyws,
+        ruleout_keyws)
+        values (#{warningkeywsId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{area,jdbcType=VARCHAR}, #{mainKeyws,jdbcType=VARCHAR}, #{deputyKeyws,jdbcType=VARCHAR},
+        #{ruleoutKeyws,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        insert into pe_t_warningkeyws
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="warningkeywsId != null">
+                warningkeyws_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="area != null">
+                area,
+            </if>
+            <if test="mainKeyws != null">
+                main_keyws,
+            </if>
+            <if test="deputyKeyws != null">
+                deputy_keyws,
+            </if>
+            <if test="ruleoutKeyws != null">
+                ruleout_keyws,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="warningkeywsId != null">
+                #{warningkeywsId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="mainKeyws != null">
+                #{mainKeyws,jdbcType=VARCHAR},
+            </if>
+            <if test="deputyKeyws != null">
+                #{deputyKeyws,jdbcType=VARCHAR},
+            </if>
+            <if test="ruleoutKeyws != null">
+                #{ruleoutKeyws,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        update pe_t_warningkeyws
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="area != null">
+                area = #{area,jdbcType=VARCHAR},
+            </if>
+            <if test="mainKeyws != null">
+                main_keyws = #{mainKeyws,jdbcType=VARCHAR},
+            </if>
+            <if test="deputyKeyws != null">
+                deputy_keyws = #{deputyKeyws,jdbcType=VARCHAR},
+            </if>
+            <if test="ruleoutKeyws != null">
+                ruleout_keyws = #{ruleoutKeyws,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where warningkeyws_id = #{warningkeywsId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.warningkeyws.model.Warningkeyws">
+        update pe_t_warningkeyws
+        set user_id = #{userId,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        area = #{area,jdbcType=VARCHAR},
+        main_keyws = #{mainKeyws,jdbcType=VARCHAR},
+        deputy_keyws = #{deputyKeyws,jdbcType=VARCHAR},
+        ruleout_keyws = #{ruleoutKeyws,jdbcType=VARCHAR}
+        where warningkeyws_id = #{warningkeywsId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

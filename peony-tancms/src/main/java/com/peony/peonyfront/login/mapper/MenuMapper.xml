@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.login.dao.MenuMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.login.model.Menu">
+        <id column="menu_id" property="menuId" jdbcType="INTEGER" />
+        <result column="menu_pid" property="menuPid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="image" property="image" jdbcType="VARCHAR" />
+        <result column="order" property="order" jdbcType="VARCHAR" />
+        <result column="visible" property="visible" jdbcType="CHAR" />
+        <result column="identify" property="identify" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        menu_id, menu_pid, name, url, image, `order`, visible,
+        identify
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_menu
+        where menu_id = #{menuId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectMenus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_menu where visible=1
+        order by identify asc
+    </select>
+
+    <select id="selectAllMenus" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_menu
+        order by identify asc
+    </select>
+    <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select mu.menu_id, mu.menu_pid, mu.name, mu.url, mu.image, mu.`order`, mu.visible,mu.identify
+        from pe_t_menu mu ,pe_t_role_menu rm where mu.visible='1' and mu.menu_id=rm.menu_id and rm.role_id=#{roleId}
+        order by mu.identify asc
+    </select>
+
+    <select id="selectByMenuCode" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.login.model.Menu">
+        select mu.menu_id, mu.menu_pid, mu.name, mu.url, mu.image, mu.`order`, mu.visible,mu.identify
+        from pe_t_menu mu where mu.visible='1' and mu.identify like CONCAT('${identify}','%' )
+
+        order by mu.identify asc
+    </select>
+
+</mapper>

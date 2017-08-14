@@ -1,0 +1,12 @@
+.weiweima,.wenzhangxiangxi .neirong{ padding:10px 14px;}.weiweima h2{ font-size:16px; padding-bottom:8px; border-top:1px solid #e7e7e7; padding-top:10px;}.weiweima{ text-align:center;}
+@media screen and (max-width:768px){
+div.bg{ width:100% !important;min-width:100% !important; max-width:100%;}
+.header,.doanghuang{ display:none;}
+.zhanwei{ margin-top:0; background-color:#c20000}
+.zhanwei.color_hongse_n{ color:#fff; font-size:14px; height:44px; line-height:44px;}
+.pc_sj_yd1{ margin-top:0;}	.pc_sj_yd{ height:40px; line-height:40px;}
+.wenzhangxiangxi_t{ text-align:left; margin-top:0;}
+.wenzhangxiangxi_t h2{ line-height:16px; font-size:12px;}
+.foot_bottom{ background-image:none; background-color:#aa0001; height:auto}
+.wenzhangxiangxi{ border:none;}
+	}

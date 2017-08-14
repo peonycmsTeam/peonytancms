@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.key.dao.IdMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.key.model.Id">
+        <result column="id_key" property="idKey" jdbcType="VARCHAR" />
+        <result column="id_value" property="idValue" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id_key, id_value
+    </sql>
+    <insert id="insert" parameterType="com.peony.peonyfront.key.model.Id">
+        insert into pe_t_id (id_key,
+        id_value)
+        values (#{idKey,jdbcType=VARCHAR},
+        #{idValue,jdbcType=INTEGER})
+    </insert>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_id
+        where id_key = #{idKey,jdbcType=VARCHAR}
+    </select>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.key.model.Id">
+        update pe_t_id
+        <set>
+            <if test="idValue != null">
+                id_value =id_value+ #{idValue,jdbcType=INTEGER},
+            </if>
+
+        </set>
+        where id_key = #{idKey,jdbcType=VARCHAR}
+    </update>
+
+</mapper>

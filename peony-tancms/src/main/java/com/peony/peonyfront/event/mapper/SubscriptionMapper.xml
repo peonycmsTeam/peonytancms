@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.event.dao.SubscriptionMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.event.model.Subscription">
+        <id column="subscription_id" property="subscriptionId" jdbcType="INTEGER" />
+        <result column="event_id" property="eventId" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        subscription_id, event_id, user_id
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subscription
+        where subscription_id = #{subscriptionId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_subscription
+        where subscription_id = #{subscriptionId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.event.model.Subscription">
+        insert into pe_t_subscription (subscription_id, event_id, user_id
+        )
+        values (#{subscriptionId,jdbcType=INTEGER}, #{eventId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.event.model.Subscription">
+        insert into pe_t_subscription
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="subscriptionId != null">
+                subscription_id,
+            </if>
+            <if test="eventId != null">
+                event_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="subscriptionId != null">
+                #{subscriptionId,jdbcType=INTEGER},
+            </if>
+            <if test="eventId != null">
+                #{eventId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.event.model.Subscription">
+        update pe_t_subscription
+        <set>
+            <if test="eventId != null">
+                event_id = #{eventId,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where subscription_id = #{subscriptionId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.event.model.Subscription">
+        update pe_t_subscription
+        set event_id = #{eventId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=VARCHAR}
+        where subscription_id = #{subscriptionId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectSubscriptionByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subscription
+        where user_id = #{userId}
+    </select>
+
+    <delete id="deleteSubscriptionByUserId" parameterType="java.lang.String">
+        delete from pe_t_subscription
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

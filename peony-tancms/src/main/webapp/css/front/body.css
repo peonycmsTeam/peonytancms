@@ -1,0 +1,18 @@
+/* ---���ļ�Ϊ��վ����Ĭ����ʽ���У���������ɫ�� --- */
+
+body{text-align:center;padding:0; margin:0;  }table,body,input{ font-size: 14px ;text-decoration: none;font-family: Microsoft YaHei,Arial, Helvetica, sans-serif }p{padding: 0 0 5px 0; margin:0}/*-Ĭ��<p></p>-*/form{margin:0;}img{border:0;}ul,li,dt,dl,dd,h1,h2,h3,ol{list-style:none;margin:0;padding:0;}/* ���� */.on_left{float:left;}.on_right{float:right;}.HackBox{border-top:1px solid !important;margin-top:-1px !important;border-top:0;margin-top:0;clear:both;visibility:hidden;}
+/* --del- blank �ո� --- */
+.blank0px,.blank2px,.blank5px,.blank8px,.blank10px,.blank16px,.blank20px,.blank15px,.blank12px{clear:both;visibility:hidden;font-size:1px; overflow:hidden}
+.blank0px{height:0px;}.blank2px{height:2px;}.blank5px{height:5px;}.blank8px{height:8px;}.blank10px{height:10px;}.blank15px{height:15px;}.blank16px{height:16px;}.blank20px{height:20px;}.blank12px{height:12px;}
+/* ���ÿ�� */
+div.bg,.div_center{margin:0 auto; }div.bg{text-align:left; width:1000px;min-width:1000px; display:block; clear:both;}
+
+/* ��ҳ */
+.dataTables_wrapper { padding:15px 0 20px 0;   text-align:center; }
+
+/* ---��վ���� --- */
+.logo_web{ background:url(../../images/img/top/logo.png) no-repeat; height:49px; width:288px; margin:25px 0;float:left;}
+.logo_web a{ display:block; height:100%; width:100%;}
+.text_center{ text-align:center}
+/* ---��ҳ��ҳ���� --- */
+.tb,.links li{ background-image:url(../../images/img/mddsj_houtai/mddsj_houtai_11.gif); background-repeat:no-repeat;background-color: transparent;}

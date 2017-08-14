@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>test1.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <!--<link rel="stylesheet" type="text/css" href="./styles.css">-->
+
+  </head>
+  
+  <body>
+    <div id="main" style="width:600px;height:400px;"></div>
+    <div id="maintwo" style="width:240px;height:400px;position: absolute;top: 10px;left:650px"></div>
+ 	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+ 	
+    <script type="text/javascript">
+    
+ // 路径配置
+require.config({
+  paths: {
+    echarts: 'http://echarts.baidu.com/build/dist'
+  }
+});
+
+// 使用
+require(
+  [
+    'echarts',
+    'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+    'echarts/chart/pie', 
+  ],
+  function (ec) {
+    // 基于准备好的dom，初始化echarts图表
+    var myChart = ec.init(document.getElementById('main')); 
+    var myCharttwo = ec.init(document.getElementById('maintwo'));
+    //设置数据
+    var option = {
+        title : {
+        text: '媒体影响力指数',
+        subtext: '',
+        x:'center'
+    },
+    tooltip : {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)"
+    },
+    legend: {
+        orient : 'vertical',
+        x : 'left',
+        data:['新闻','微信','微博','博客','报刊','论坛']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType : {
+                show: true, 
+                type: ['pie', 'funnel'],
+                option: {
+                    funnel: {
+                        x: '25%',
+                        width: '50%',
+                        funnelAlign: 'left',
+                        max: 1548
+                    }
+                }
+            },
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    series : [
+        {
+            name:'访问来源',
+            type:'pie',
+            radius : '55%',
+            center: ['50%', '60%'],
+            data:[
+                {value:335, name:'新闻'},
+                {value:310, name:'微信'},
+                {value:234, name:'微博'},
+                {value:135, name:'博客'},
+                {value:1548, name:'报刊'},
+                {value:135, name:'论坛'},
+            ]
+        }
+    ]
+    };
+    
+	  optiontwo = {
+    title : {
+        text: '媒体影响力排行',
+        subtext: ''
+    },
+    tooltip : {
+        trigger: 'axis'
+    },
+    legend: {
+        data:['']
+    },
+    toolbox: {
+        show : true,
+        feature : {
+            mark : {show: true},
+            dataView : {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore : {show: true},
+            saveAsImage : {show: true}
+        }
+    },
+    calculable : true,
+    xAxis : [
+        {
+            type : 'value',
+            boundaryGap : [0, 0.01]
+        }
+    ],
+    yAxis : [
+        {
+            type : 'category',
+            data : ['新浪新闻','百度新闻','网易新闻','搜狐新闻','人民网','光明网','新华网','法制网','凤凰网','赶集网']
+        }
+    ],
+    series : [
+        {
+            name:'',
+            type:'bar',
+            data:[5,12,33,44, 55, 66.98,70,77.98, 81.98,89.98]
+        }
+    ]
+};
+	
+    // 为echarts对象加载数据 
+    myChart.setOption(option); 
+    myCharttwo.setOption(optiontwo); 
+  }
+);
+    </script>
+
+
+  </body>
+</html>

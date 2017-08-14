@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.thinktank.dao.ChannelMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.thinktank.model.Channel">
+        <id column="channel_id" property="channelId" jdbcType="INTEGER" />
+        <result column="channel_pid" property="channelPid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        channel_id, channel_pid, name, orderno
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_channel
+        where channel_id = #{channelId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_channel
+        where channel_id = #{channelId,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.thinktank.model.Channel">
+        insert into pe_t_channel (channel_id, channel_pid, name,
+        orderno)
+        values (#{channelId,jdbcType=INTEGER}, #{channelPid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{orderno,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.thinktank.model.Channel">
+        insert into pe_t_channel
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="channelPid != null">
+                channel_pid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="orderno != null">
+                orderno,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelPid != null">
+                #{channelPid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="orderno != null">
+                #{orderno,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.thinktank.model.Channel">
+        update pe_t_channel
+        <set>
+            <if test="channelPid != null">
+                channel_pid = #{channelPid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="orderno != null">
+                orderno = #{orderno,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where channel_id = #{channelId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.thinktank.model.Channel">
+        update pe_t_channel
+        set channel_pid = #{channelPid,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        orderno = #{orderno,jdbcType=VARCHAR}
+        where channel_id = #{channelId,jdbcType=INTEGER}
+    </update>
+    <!-- 查询Channel分页 -->
+    <select id="selectChannelByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT channel2.*,channel1.`name` groupName,COUNT(pubinfo.channel_id) infoNum,SUM(IF(pubinfo.subject_recommend=1,1,0)) seminarNum,SUM(IF(pubinfo.case_recommend=1,1,0)) caseNum
+        FROM pe_t_channel channel1,pe_t_channel channel2 LEFT JOIN pe_t_pubinfo pubinfo ON channel2.channel_id=pubinfo.channel_id
+        WHERE channel1.channel_id=channel2.channel_pid
+        AND channel1.channel_pid=#{channelPid,jdbcType=INTEGER}
+        GROUP BY channel2.channel_id
+    </select>
+    <!-- 查询案例库下所有子节点 -->
+    <select id="selectChannelByPid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_channel
+        where channel_pid = #{channelPid,jdbcType=INTEGER}
+    </select>
+</mapper>

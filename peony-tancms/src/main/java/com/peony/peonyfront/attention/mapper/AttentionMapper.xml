@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.attention.dao.AttentionMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.attention.model.Attention">
+        <id column="attention_id" property="attentionId" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="time" property="time" jdbcType="TIMESTAMP" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        attention_id, name, time, user_id
+    </sql>
+
+    <!-- 全查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.attention.model.Attention">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_attention
+        <where>
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by time desc
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_attention
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_attention
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.attention.model.Attention">
+        insert into pe_t_attention (attention_id, name, time,
+        user_id)
+        values (#{attentionId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP},
+        #{userId,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.attention.model.Attention">
+        insert into pe_t_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="attentionId != null">
+                attention_id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="time != null">
+                time,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="attentionId != null">
+                #{attentionId,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.attention.model.Attention">
+        update pe_t_attention
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                time = #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.attention.model.Attention">
+        update pe_t_attention
+        set name = #{name,jdbcType=VARCHAR},
+        time = #{time,jdbcType=TIMESTAMP},
+        user_id = #{userId,jdbcType=VARCHAR}
+        where attention_id = #{attentionId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectAll" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.attention.model.Attention">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_attention
+        <where>
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+        </where>
+        order by time desc
+    </select>
+
+</mapper>

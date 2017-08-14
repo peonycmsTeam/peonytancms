@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.subject.dao.SubjectMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.subject.model.Subject">
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userId" property="userid" jdbcType="INTEGER" />
+        <result column="state" property="state" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+        <result column="lastUpdatedTime" property="lastupdatedtime" jdbcType="TIMESTAMP" />
+        <result column="dropTime" property="droptime" jdbcType="TIMESTAMP" />
+        <result column="pid" property="pid" jdbcType="INTEGER" />
+        <result column="isChildnodes" property="ischildnodes" jdbcType="CHAR" />
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, userId, state, name, createTime, lastUpdatedTime, dropTime, pid, isChildnodes,update_time
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_subject
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.subject.model.Subject">
+        insert into pe_t_subject (id, userId, state,
+        name, createTime, lastUpdatedTime,
+        dropTime, pid, isChildnodes,update_time
+        )
+        values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP},
+        #{droptime,jdbcType=TIMESTAMP}, #{pid,jdbcType=INTEGER}, #{ischildnodes,jdbcType=CHAR},#{updateTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.subject.model.Subject">
+        insert into pe_t_subject
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userid != null">
+                userId,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="createtime != null">
+                createTime,
+            </if>
+            <if test="lastupdatedtime != null">
+                lastUpdatedTime,
+            </if>
+            <if test="droptime != null">
+                dropTime,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+            <if test="ischildnodes != null">
+                isChildnodes,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userid != null">
+                #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastupdatedtime != null">
+                #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="droptime != null">
+                #{droptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="ischildnodes != null">
+                #{ischildnodes,jdbcType=CHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.subject.model.Subject">
+        update pe_t_subject
+        <set>
+            <if test="userid != null">
+                userId = #{userid,jdbcType=INTEGER},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="createtime != null">
+                createTime = #{createtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastupdatedtime != null">
+                lastUpdatedTime = #{lastupdatedtime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="droptime != null">
+                dropTime = #{droptime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pid != null">
+                pid = #{pid,jdbcType=INTEGER},
+            </if>
+            <if test="ischildnodes != null">
+                isChildnodes = #{ischildnodes,jdbcType=CHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.subject.model.Subject">
+        update pe_t_subject
+        set userId = #{userid,jdbcType=INTEGER},
+        state = #{state,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+        lastUpdatedTime = #{lastupdatedtime,jdbcType=TIMESTAMP},
+        dropTime = #{droptime,jdbcType=TIMESTAMP},
+        pid = #{pid,jdbcType=INTEGER},
+        isChildnodes = #{ischildnodes,jdbcType=CHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <!-- 查询出用户设置的节点 -->
+    <select id="selectSubjectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        where userId = #{userid,jdbcType=INTEGER} and state=1
+    </select>
+
+    <!-- 查询出用户设置的节点 -->
+    <select id="selectSubjectByUserIdExclusive" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        where userId = #{userid,jdbcType=INTEGER} and state=1 and id != 1
+    </select>
+
+    <!-- 根据节点id查询该节点下的子节点 -->
+    <select id="selectChildnodesById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        where pid = #{id,jdbcType=INTEGER} and state=1
+    </select>
+    <!-- 查询该用户下的所根节点 -->
+    <select id="selectNodesByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        where userId = #{userid,jdbcType=INTEGER}
+        and isChildnodes = '1'
+        and state=1
+    </select>
+
+    <!-- 根据节点id查询该节点下的子节点 -->
+    <select id="selectSubjectByUserIdAndPid" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.Subject">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_subject
+        <where>
+            state=1
+            <if test="userid != null">
+                and userId = #{userid,jdbcType=INTEGER}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid,jdbcType=INTEGER}
+            </if>
+            <if test="ischildnodes != null">
+                and isChildnodes = #{ischildnodes,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+    <!-- 根据pid查询是否含有子部门 -->
+    <select id="selectCountByPid" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.subject.model.Subject">
+        SELECT COUNT(id) count from pe_t_subject
+        <where>
+            state=1
+            <if test="userid != null">
+                and userId = #{userid,jdbcType=INTEGER}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+</mapper>

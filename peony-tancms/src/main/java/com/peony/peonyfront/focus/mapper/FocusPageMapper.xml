@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.focus.dao.FocusPageMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.focus.model.FocusPage">
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="focusId" property="focusid" jdbcType="CHAR" />
+        <result column="pageId" property="pageid" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="downloadDate" property="downloaddate" jdbcType="TIMESTAMP" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="clickCount" property="clickcount" jdbcType="INTEGER" />
+        <result column="replyCount" property="replycount" jdbcType="INTEGER" />
+        <result column="forwardCount" property="forwardcount" jdbcType="INTEGER" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="publishDate" property="publishdate" jdbcType="TIMESTAMP" />
+        <result column="newsLevel" property="newslevel" jdbcType="INTEGER" />
+        <result column="polarity" property="polarity" jdbcType="INTEGER" />
+        <result column="groupCount" property="groupcount" jdbcType="INTEGER" />
+        <result column="groupSeedId" property="groupseedid" jdbcType="VARCHAR" />
+        <result column="is_mainInfo" property="isMaininfo" jdbcType="CHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, focusId, pageId, url, webSite, downloadDate, title, summary,
+        clickCount, replyCount,
+        forwardCount, type, publishDate, newsLevel, polarity, groupCount, groupSeedId,
+        is_mainInfo
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_focus_page
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete from pe_t_focus_page
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        insert into pe_t_focus_page (id, focusId, pageId,
+        url, webSite, downloadDate,
+        title, summary, clickCount,
+        replyCount, forwardCount, type,
+        publishDate, newsLevel, polarity,
+        groupCount, groupSeedId, is_mainInfo
+        )
+        values (#{id,jdbcType=VARCHAR}, #{focusid,jdbcType=CHAR},
+        #{pageid,jdbcType=VARCHAR},
+        #{url,jdbcType=VARCHAR}, #{website,jdbcType=VARCHAR}, #{downloaddate,jdbcType=TIMESTAMP},
+        #{title,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+        #{clickcount,jdbcType=INTEGER},
+        #{replycount,jdbcType=INTEGER}, #{forwardcount,jdbcType=INTEGER}, #{type,jdbcType=INTEGER},
+        #{publishdate,jdbcType=TIMESTAMP}, #{newslevel,jdbcType=INTEGER},
+        #{polarity,jdbcType=INTEGER},
+        #{groupcount,jdbcType=INTEGER}, #{groupseedid,jdbcType=VARCHAR}, #{isMaininfo,jdbcType=CHAR}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        insert into pe_t_focus_page
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="focusid != null">
+                focusId,
+            </if>
+            <if test="pageid != null">
+                pageId,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="website != null">
+                webSite,
+            </if>
+            <if test="downloaddate != null">
+                downloadDate,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="clickcount != null">
+                clickCount,
+            </if>
+            <if test="replycount != null">
+                replyCount,
+            </if>
+            <if test="forwardcount != null">
+                forwardCount,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="publishdate != null">
+                publishDate,
+            </if>
+            <if test="newslevel != null">
+                newsLevel,
+            </if>
+            <if test="polarity != null">
+                polarity,
+            </if>
+            <if test="groupcount != null">
+                groupCount,
+            </if>
+            <if test="groupseedid != null">
+                groupSeedId,
+            </if>
+            <if test="isMaininfo != null">
+                is_mainInfo,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="focusid != null">
+                #{focusid,jdbcType=CHAR},
+            </if>
+            <if test="pageid != null">
+                #{pageid,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="downloaddate != null">
+                #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="clickcount != null">
+                #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newslevel != null">
+                #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="polarity != null">
+                #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="groupcount != null">
+                #{groupcount,jdbcType=INTEGER},
+            </if>
+            <if test="groupseedid != null">
+                #{groupseedid,jdbcType=VARCHAR},
+            </if>
+            <if test="isMaininfo != null">
+                #{isMaininfo,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        update pe_t_focus_page
+        <set>
+            <if test="focusid != null">
+                focusId = #{focusid,jdbcType=CHAR},
+            </if>
+            <if test="pageid != null">
+                pageId = #{pageid,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                webSite = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="downloaddate != null">
+                downloadDate = #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="clickcount != null">
+                clickCount = #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                replyCount = #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                forwardCount = #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                publishDate = #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newslevel != null">
+                newsLevel = #{newslevel,jdbcType=INTEGER},
+            </if>
+            <if test="polarity != null">
+                polarity = #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="groupcount != null">
+                groupCount = #{groupcount,jdbcType=INTEGER},
+            </if>
+            <if test="groupseedid != null">
+                groupSeedId = #{groupseedid,jdbcType=VARCHAR},
+            </if>
+            <if test="isMaininfo != null">
+                is_mainInfo = #{isMaininfo,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        update pe_t_focus_page
+        set focusId = #{focusid,jdbcType=CHAR},
+        pageId = #{pageid,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        webSite = #{website,jdbcType=VARCHAR},
+        downloadDate = #{downloaddate,jdbcType=TIMESTAMP},
+        title = #{title,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+        clickCount = #{clickcount,jdbcType=INTEGER},
+        replyCount = #{replycount,jdbcType=INTEGER},
+        forwardCount = #{forwardcount,jdbcType=INTEGER},
+        type = #{type,jdbcType=INTEGER},
+        publishDate = #{publishdate,jdbcType=TIMESTAMP},
+        newsLevel = #{newslevel,jdbcType=INTEGER},
+        polarity = #{polarity,jdbcType=INTEGER},
+        groupCount = #{groupcount,jdbcType=INTEGER},
+        groupSeedId = #{groupseedid,jdbcType=VARCHAR},
+        is_mainInfo = #{isMaininfo,jdbcType=CHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <!-- 全查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_focus_page
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="type !=null and type!=0">
+                and type = #{type}
+            </if>
+            <if test="stime !=null">
+                and <![CDATA[publishDate >= '${stime}']]>
+            </if>
+            <if test="etime!=null">
+                and <![CDATA[publishDate <= '${etime} 23:59:59']]>
+            </if>
+
+        </where>
+        order by publishDate desc
+    </select>
+    <!-- 查询汇总 -->
+    <select id="selectByCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type,substr(t.publishDate,1,10)
+        publishDate
+        from
+        pe_t_focus_page t
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= #{stime}    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <= #{etime}    ]]>
+            </if>
+        </where>
+        GROUP BY t.type,substr(t.publishDate,1,10) order
+        by publishDate
+    </select>
+    <!-- 查询媒体汇总 -->
+    <select id="selectByMediaCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type from pe_t_focus_page t
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= #{stime}    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <= #{etime}    ]]>
+            </if>
+        </where>
+        GROUP BY
+        t.type order by publishDate;
+    </select>
+    <!-- 查询各分类媒体汇总 -->
+    <select id="selectByMedia" resultType="java.util.Map" parameterType="java.util.Map">
+        select count(1) count,website from pe_t_focus_page
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= #{stime}    ]]>
+            </if>
+            <if test="etime !=null">
+				<![CDATA[ and publishDate <= #{etime}    ]]>
+            </if>
+            <if test="type !=null">
+                and type = #{type}
+            </if>
+        </where>
+        GROUP BY website order by count desc limit 5
+    </select>
+    <!-- 查询汇总 -->
+    <select id="selectByTypeCount" resultType="java.util.Map" parameterType="java.util.Map">
+        SELECT count(1) count,type
+        from
+        pe_t_focus_page t
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="stime !=null">
+				<![CDATA[ and publishDate >= #{stime}    ]]>
+            </if>
+
+        </where>
+        GROUP BY t.type order
+        by type
+    </select>
+    <!--导出选择的舆情 -->
+    <select id="selectFocusPageByIds" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_focus_page
+        where id in
+        <foreach collection="ids" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+        order by publishDate desc
+    </select>
+    <!-- 按时间段导出 -->
+    <select id="selectFocusBySelectTime" resultMap="BaseResultMap" parameterType="com.peony.peonyfront.focus.model.FocusPage">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        pe_t_focus_page
+        <where>
+            <if test="focusid !=null">
+                and focusId = #{focusid}
+            </if>
+            <if test="type !=null and type!=0">
+                and type = #{type}
+            </if>
+            <if test="stime !=null">
+                and <![CDATA[publishDate >= '${stime}']]>
+            </if>
+            <if test="etime!=null">
+                and <![CDATA[publishDate <= '${etime} 23:59:59']]>
+            </if>
+        </where>
+        order by publishDate desc
+    </select>
+</mapper>

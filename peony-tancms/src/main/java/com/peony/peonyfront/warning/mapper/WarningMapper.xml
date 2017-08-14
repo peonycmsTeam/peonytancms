@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.warning.dao.WarningMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.warning.model.Warning">
+        <id column="warning_id" property="warningId" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="warn_time" property="warnTime" jdbcType="TIMESTAMP" />
+        <result column="page_id" property="pageId" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="summary" property="summary" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="INTEGER" />
+        <result column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="is_read" property="isRead" jdbcType="VARCHAR" />
+        <result column="webSite" property="website" jdbcType="VARCHAR" />
+        <result column="waring_type" property="waringType" jdbcType="INTEGER" />
+        <result column="clickCount" property="clickcount" jdbcType="INTEGER" />
+        <result column="replyCount" property="replycount" jdbcType="INTEGER" />
+        <result column="forwardCount" property="forwardcount" jdbcType="INTEGER" />
+        <result column="publishDate" property="publishdate" jdbcType="TIMESTAMP" />
+        <result column="polarity" property="polarity" jdbcType="INTEGER" />
+        <result column="downloadDate" property="downloaddate" jdbcType="TIMESTAMP" />
+        <result column="newsLevel" property="newsLevel" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        warning_id, title, warn_time, page_id, url, summary, type, user_id, is_read, webSite,
+        waring_type, clickCount, replyCount, forwardCount, publishDate, polarity, downloadDate, newsLevel
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_warning
+        where warning_id = #{warningId,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_warning
+        where warning_id = #{warningId,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.peony.peonyfront.warning.model.Warning">
+        insert into pe_t_warning (warning_id, title, warn_time,
+        page_id, url, summary,
+        type, user_id, is_read,
+        webSite, waring_type, clickCount,
+        replyCount, forwardCount, publishDate,
+        polarity, downloadDate, newsLevel)
+        values (#{warningId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{warnTime,jdbcType=TIMESTAMP},
+        #{pageId,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR},
+        #{type,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{isRead,jdbcType=VARCHAR},
+        #{website,jdbcType=VARCHAR}, #{waringType,jdbcType=INTEGER}, #{clickcount,jdbcType=INTEGER},
+        #{replycount,jdbcType=INTEGER}, #{forwardcount,jdbcType=INTEGER}, #{publishdate,jdbcType=TIMESTAMP},
+        #{polarity,jdbcType=INTEGER}, #{downloaddate,jdbcType=TIMESTAMP}, #{newsLevel,jdbcType=INTEGER})
+    </insert>
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.warning.model.Warning">
+        insert into pe_t_warning
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="warningId != null">
+                warning_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="warnTime != null">
+                warn_time,
+            </if>
+            <if test="pageId != null">
+                page_id,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="type != null">
+                type,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="isRead != null">
+                is_read,
+            </if>
+            <if test="website != null">
+                webSite,
+            </if>
+            <if test="waringType != null">
+                waring_type,
+            </if>
+            <if test="clickcount != null">
+                clickCount,
+            </if>
+            <if test="replycount != null">
+                replyCount,
+            </if>
+            <if test="forwardcount != null">
+                forwardCount,
+            </if>
+            <if test="publishdate != null">
+                publishDate,
+            </if>
+            <if test="polarity != null">
+                polarity,
+            </if>
+            <if test="downloaddate != null">
+                downloadDate,
+            </if>
+            <if test="newsLevel != null">
+                newsLevel,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="warningId != null">
+                #{warningId,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="warnTime != null">
+                #{warnTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pageId != null">
+                #{pageId,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                #{type,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="isRead != null">
+                #{isRead,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="waringType != null">
+                #{waringType,jdbcType=INTEGER},
+            </if>
+            <if test="clickcount != null">
+                #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="polarity != null">
+                #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="downloaddate != null">
+                #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsLevel != null">
+                #{newsLevel,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.warning.model.Warning">
+        update pe_t_warning
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="warnTime != null">
+                warn_time = #{warnTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="pageId != null">
+                page_id = #{pageId,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null">
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="isRead != null">
+                is_read = #{isRead,jdbcType=VARCHAR},
+            </if>
+            <if test="website != null">
+                webSite = #{website,jdbcType=VARCHAR},
+            </if>
+            <if test="waringType != null">
+                waring_type = #{waringType,jdbcType=INTEGER},
+            </if>
+            <if test="clickcount != null">
+                clickCount = #{clickcount,jdbcType=INTEGER},
+            </if>
+            <if test="replycount != null">
+                replyCount = #{replycount,jdbcType=INTEGER},
+            </if>
+            <if test="forwardcount != null">
+                forwardCount = #{forwardcount,jdbcType=INTEGER},
+            </if>
+            <if test="publishdate != null">
+                publishDate = #{publishdate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="polarity != null">
+                polarity = #{polarity,jdbcType=INTEGER},
+            </if>
+            <if test="downloaddate != null">
+                downloadDate = #{downloaddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="newsLevel != null">
+                newsLevel = #{newsLevel,jdbcType=INTEGER},
+            </if>
+        </set>
+        where warning_id = #{warningId,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.warning.model.Warning">
+        update pe_t_warning
+        set title = #{title,jdbcType=VARCHAR},
+        warn_time = #{warnTime,jdbcType=TIMESTAMP},
+        page_id = #{pageId,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+        type = #{type,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=INTEGER},
+        is_read = #{isRead,jdbcType=VARCHAR},
+        webSite = #{website,jdbcType=VARCHAR},
+        waring_type = #{waringType,jdbcType=INTEGER},
+        clickCount = #{clickcount,jdbcType=INTEGER},
+        replyCount = #{replycount,jdbcType=INTEGER},
+        forwardCount = #{forwardcount,jdbcType=INTEGER},
+        publishDate = #{publishdate,jdbcType=TIMESTAMP},
+        polarity = #{polarity,jdbcType=INTEGER},
+        downloadDate = #{downloaddate,jdbcType=TIMESTAMP},
+        newsLevel = #{newsLevel,jdbcType=INTEGER}
+        where warning_id = #{warningId,jdbcType=VARCHAR}
+    </update>
+    <!-- 根据 waringIds删除预警信息 -->
+    <delete id="delWaringByWaringIds" parameterType="java.util.List">
+        delete from pe_t_warning
+        where warning_id in
+        <foreach collection="waringIds" item="waringId" index="index" open="(" close=")" separator=",">
+            #{waringId}
+        </foreach>
+    </delete>
+    <!-- 查询舆情预警列表 -->
+    <select id="selectWaringByPage" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_warning
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+            <if test="isRead!=null">
+                and is_read = #{isRead}
+            </if>
+            <if test="selectDate != null">
+        	 <![CDATA[ AND warn_time >= "${beginDate}" ]]>
+            </if>
+            <if test="type!=null">
+                and type = #{type}
+            </if>
+            <if test="waringType!=null">
+                and waring_type = #{waringType}
+            </if>
+            <if test="polarity!=null">
+                and polarity = #{polarity}
+            </if>
+            <if test="title!=null">
+                and title like CONCAT('%','${title}','%' )
+            </if>
+        </where>
+        order by
+        <if test="time==null">
+            warn_time
+        </if>
+        <if test="time!=null">
+            publishDate
+        </if>
+        desc
+    </select>
+    <!-- 今日预警总数 -->
+    <select id="selectWarningTodayCount" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(*) count
+        from pe_t_warning
+        <where>
+            to_days(warn_time)=to_days(now())
+            <if test="userId!=null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+    <!-- 根据id导出所选项 -->
+    <select id="selectByWarningIds" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        from pe_t_warning
+        where warning_id in
+        <foreach collection="waringIds" item="waringId" index="index" open="(" close=")" separator=",">
+            #{waringId}
+        </foreach>
+    </select>
+    <!-- 根据时间查询所有预警 -->
+    <select id="selectWaringByTime" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_warning
+        <where>
+            <if test="userId!=null">
+                user_id = #{userId}
+            </if>
+            <if test="btime != null">
+        	 <![CDATA[ AND warn_time >= "${btime}" ]]>
+            </if>
+            <if test="etime != null">
+        	 <![CDATA[ AND warn_time <= "${etime}" ]]>
+            </if>
+        </where>
+        order by warn_time desc
+
+    </select>
+</mapper>

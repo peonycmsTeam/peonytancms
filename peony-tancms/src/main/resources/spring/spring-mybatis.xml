@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--对包中的所有符合要求的类进行扫描，以完成Bean创建和自动依赖注入的功能 -->
+    <context:component-scan base-package="com.peony.*.*.service" />
+
+    <!-- 引入jdbc和mongodb属性文件 -->
+    <context:property-placeholder location="classpath:/config/**/spring*.properties" />
+
+    <!-- Druid数据源配置 (master数据源,负责write) -->
+    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${datasource.masterUrl}" />
+        <property name="username" value="${datasource.username}" />
+        <property name="password" value="${datasource.password}" />
+        <property name="filters" value="${druid.filters}"></property>
+        <!-- 数据源需要数据库密码进行解密 -->
+        <property name="connectionProperties" value="${druid.connectProperties}"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+        <property name="initialSize" value="${druid.initialSize}" />
+        <property name="minIdle" value="${druid.minIdle}" />
+        <property name="maxActive" value="${druid.maxActive}" />
+        <!-- 配置获取连接等待超时的时间 -->
+        <property name="maxWait" value="${druid.maxWait}" />
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 testWhileIdle的判断依据 -->
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 设置5分钟 -->
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+        <!-- 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery 为 null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。 -->
+        <property name="validationQuery" value="${druid.validationQuery}" />
+        <!-- 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。 -->
+        <property name="testWhileIdle" value="${druid.testWhileIdle}" />
+        <!-- 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。 -->
+        <property name="testOnBorrow" value="${druid.testOnBorrow}" />
+        <!-- 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能 -->
+        <property name="testOnReturn" value="${druid.testOnReturn}" />
+        <!-- 是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。在mysql5.5以下的版本中没有PSCache功能，建议关闭掉。5.5及以上版本有PSCache，建议开启。 -->
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
+        <!-- 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100 -->
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
+        <!-- 连接泄漏监测(忘记close) 配置removeAbandoned对性能会有一些影响，建议怀疑存在泄漏之后再打开 -->
+        <!-- 打开removeAbandoned功能 -->
+        <property name="removeAbandoned" value="${druid.removeAbandoned}" />
+        <!-- 1800秒，也就是30分钟 -->
+        <property name="removeAbandonedTimeout" value="${druid.removeAbandonedTimeout}" />
+        <!-- 关闭abanded连接时输出错误日志 -->
+        <property name="logAbandoned" value="${druid.logAbandoned}" />
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter" />
+                <ref bean="wall-filter" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- Slave数据源,负责read -->
+    <bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${datasource.slaveUrl}" />
+        <property name="username" value="${datasource.username}" />
+        <property name="password" value="${datasource.password}" />
+        <property name="filters" value="${druid.filters}"></property>
+        <property name="connectionProperties" value="${druid.connectProperties}"></property>
+        <property name="initialSize" value="${druid.initialSize}" />
+        <property name="minIdle" value="${druid.minIdle}" />
+        <property name="maxActive" value="${druid.maxActive}" />
+        <property name="maxWait" value="${druid.maxWait}" />
+        <property name="timeBetweenEvictionRunsMillis" value="${druid.timeBetweenEvictionRunsMillis}" />
+        <property name="minEvictableIdleTimeMillis" value="${druid.minEvictableIdleTimeMillis}" />
+        <property name="validationQuery" value="${druid.validationQuery}" />
+        <property name="testWhileIdle" value="${druid.testWhileIdle}" />
+        <property name="testOnBorrow" value="${druid.testOnBorrow}" />
+        <property name="testOnReturn" value="${druid.testOnReturn}" />
+        <property name="poolPreparedStatements" value="${druid.poolPreparedStatements}" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="${druid.maxPoolPreparedStatementPerConnectionSize}" />
+        <property name="removeAbandoned" value="${druid.removeAbandoned}" />
+        <property name="removeAbandonedTimeout" value="${druid.removeAbandonedTimeout}" />
+        <property name="logAbandoned" value="${druid.logAbandoned}" />
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter" />
+                <ref bean="wall-filter" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- 监控拦截器 -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <!-- slowSqlMillis用来配置SQL慢的标准，执行时间超过slowSqlMillis的就是慢,并且通过日志输出执行慢的SQL，配置是5秒 -->
+        <property name="slowSqlMillis" value="${druid.slowSqlMillis}" />
+        <property name="logSlowSql" value="${druid.logSlowSql}" />
+        <!-- 日志Sql合并配置 -->
+        <property name="mergeSql" value="${druid.mergeSql}" />
+    </bean>
+
+    <!-- 配置防御SQL注入攻击 -->
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <!-- 数据库类型 -->
+        <property name="dbType" value="${druid.dbType}" />
+        <!-- 配置防御SQL注入攻击,采用默认配置 -->
+        <!-- <property name="dir" value="META-INF/druid/wall/mysql"></property> -->
+    </bean>
+
+    <!-- 配置的动态数据源，实现读写分离 -->
+    <bean id="dataSource" class="com.peony.core.common.dataSource.DynamicDataSource">
+        <property name="targetDataSources">
+            <map>
+                <entry key="master" value-ref="masterDataSource" />
+                <entry key="slave" value-ref="slaveDataSource" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="slaveDataSource" />
+    </bean>
+
+    <!-- 配置myBatis -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="mapperLocations" value="classpath:/com/peony/**/**/mapper/*.xml" />
+        <property name="plugins">
+            <list>
+                <!-- mybatis分页插件拦截器配置 -->
+                <bean id="pageInterceptor" class="com.peony.core.common.pagination.PageInterceptor">
+                    <property name="dialect" value="mysql" />
+                    <property name="pageSqlId" value=".*Page$" />
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!-- myBatis mapper配置 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.peony.*.*.dao" />
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+    </bean>
+
+    <!-- 事务配置 -->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="select*" read-only="true" />
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="load*" read-only="true" />
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="*" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- quartz -->
+    <!-- 线程执行器配置，用于任务注册 -->
+    <bean id="executor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="20" />
+        <property name="maxPoolSize" value="1000" />
+        <property name="queueCapacity" value="500" />
+        <property name="allowCoreThreadTimeOut" value="true"></property>
+    </bean>
+    <!-- 业务对象 -->
+    <bean id="bizObject" class="com.peony.peonyfront.util.RedisJobTask" />
+    <bean id="timerThread" class="com.peony.peonyfront.util.ThreadJobRegionIndexTask" />
+    <bean id="timerIndustryThread" class="com.peony.peonyfront.util.ThreadJobIndustryIndexTask" />
+    <bean id="timerEventThread" class="com.peony.peonyfront.util.ThreadJobEventIndexTask" />
+    <bean id="timerMediaCountThread" class="com.peony.peonyfront.util.ThreadJobMediaCountTask" />
+
+    <!-- 调度业务 -->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="bizObject" />
+        <property name="targetMethod" value="doUserRedis" />
+    </bean>
+    <bean id="jobTimerThread" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerThread" />
+        <property name="targetMethod" value="run" />
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="jobTimerIndustryThread" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerIndustryThread" />
+        <property name="targetMethod" value="run" />
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="jobTimerEventThread" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerEventThread" />
+        <property name="targetMethod" value="run" />
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <bean id="jobTimerMediaCountThread" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="timerMediaCountThread" />
+        <property name="targetMethod" value="run" />
+        <property name="concurrent">
+            <value>false</value>
+        </property>
+    </bean>
+    <!--<bean id="CleanRedis" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="bizObject" />
+        <property name="targetMethod" value="cleanUserRedis" />
+    </bean> -->
+    <!-- 每天5分钟执行一次 -->
+    <bean id="doUserRedisTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobDetail" />
+        <property name="cronExpression" value="0 0 6 * * ?" />
+        <!--<property name="cronExpression" value="0 */5 * * * ?" /> -->
+    </bean>
+    <!-- 每天凌晨1点执行一次 -->
+    <bean id="doUserTimerThreadTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobTimerThread" />
+        <property name="cronExpression" value="0 0 1 * * ? " />
+        <!-- <property name="cronExpression" value="0 28 13 * * ?" /> -->
+    </bean>
+    <!-- 每天凌晨1点执行一次 -->
+    <bean id="doUserTimerIndustryThreadTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobTimerIndustryThread" />
+        <property name="cronExpression" value="0 0 1 * * ? " />
+        <!-- <property name="cronExpression" value="0 28 13 * * ?" /> -->
+    </bean>
+    <!-- 每天凌晨1点执行一次 -->
+    <bean id="doUserTimerEventThreadTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobTimerEventThread" />
+        <property name="cronExpression" value="0 0 1 * * ? " />
+        <!-- <property name="cronExpression" value="0 28 13 * * ?" /> -->
+    </bean>
+    <!-- 每天凌晨1点执行一次 -->
+    <bean id="doUserTimerMediaCountThreadTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="jobTimerMediaCountThread" />
+        <property name="cronExpression" value="0 0 1 * * ? " />
+        <!-- <property name="cronExpression" value="0 28 13 * * ?" /> -->
+    </bean>
+    <!-- 每天凌晨6点执行一次 -->
+    <!--<bean id="cleanUserRedisTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+    <property name="jobDetail" ref="CleanRedis" />
+    <property name="cronExpression" value="0 0 6 * * ?" /> -->
+    <!-- <property name="cronExpression" value="0 0 6 * * ?" /> -->
+    <!--</bean> -->
+    <!-- 设置调度 -->
+    <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="doUserRedisTrigger" />
+                <!--<ref bean="cleanUserRedisTrigger" /> -->
+                <ref bean="doUserTimerThreadTrigger" />
+                <ref bean="doUserTimerIndustryThreadTrigger" />
+                <ref bean="doUserTimerEventThreadTrigger" />
+                <ref bean="doUserTimerMediaCountThreadTrigger" />
+            </list>
+        </property>
+    </bean>
+
+    <!-- 切面配置 -->
+    <aop:config proxy-target-class="false">
+        <aop:advisor pointcut="execution(* com.peony..service.*ServiceImpl.*(..))" advice-ref="txAdvice" />
+    </aop:config>
+
+    <!-- 系统日志 -->
+    <bean id="logAspect" class="com.peony.peonyfront.util.log.LogAspect" />
+    <aop:config proxy-target-class="false">
+        <aop:aspect ref="logAspect">
+            <aop:pointcut id="logPointCut" expression="execution(* com.peony..service.*ServiceImpl.*(..))" />
+            <aop:before pointcut-ref="logPointCut" method="before" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 动态数据源AOP配置,实现读写分离 -->
+    <bean id="change" class="com.peony.core.common.dataSource.BeforeAdvice" />
+    <aop:config proxy-target-class="false">
+        <aop:aspect ref="change">
+            <aop:before method="setSlaveDataSource" pointcut="execution(* com.peony..dao.*Mapper.select*(..))" />
+        </aop:aspect>
+        <aop:aspect ref="change">
+            <aop:before method="setMasterDataSource" pointcut="execution(* com.peony..dao.*Mapper.delete*(..)) || execution(* com.peony..dao.*Mapper.update*(..)) || execution(* com.peony..dao.*Mapper.insert*(..)) || execution(* com.peony..dao.*Mapper.batchInsert*(..)) || execution(* com.peony..dao.*Mapper.batchUpdate*(..)) || execution(* com.peony..dao.*Mapper.batchDelete*(..))" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- 静态存储SpringContext -->
+    <bean class="com.peony.core.common.utils.SpringContextHolder" lazy-init="false" />
+
+    <!-- 导出excel服务 <bean id="exportDataPoolService" class="com.peony.core.export.service.ExportDataPoolServiceImpl" /> -->
+</beans>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peony.peonyfront.baseclass.dao.BaseclassMapper">
+    <resultMap id="BaseResultMap" type="com.peony.peonyfront.baseclass.model.Baseclass">
+        <id column="baseclass_id" property="baseclassId" jdbcType="INTEGER" />
+        <result column="baseclass_pid" property="baseclassPid" jdbcType="INTEGER" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="order" property="order" jdbcType="VARCHAR" />
+        <result column="explain" property="explain" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        baseclass_id, baseclass_pid, name, 'order', 'explain'
+    </sql>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from pe_t_baseclass
+        where baseclass_id = #{baseclassId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from pe_t_baseclass
+        where baseclass_id = #{baseclassId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insert" parameterType="com.peony.peonyfront.baseclass.model.Baseclass">
+        insert into pe_t_baseclass (baseclass_id, baseclass_pid, name,
+        order, explain)
+        values (#{baseclassId,jdbcType=INTEGER}, #{baseclassPid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+        #{order,jdbcType=VARCHAR}, #{explain,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertSelective" parameterType="com.peony.peonyfront.baseclass.model.Baseclass">
+        insert into pe_t_baseclass
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="baseclassId != null">
+                baseclass_id,
+            </if>
+            <if test="baseclassPid != null">
+                baseclass_pid,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="order != null">
+                order,
+            </if>
+            <if test="explain != null">
+                explain,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="baseclassId != null">
+                #{baseclassId,jdbcType=INTEGER},
+            </if>
+            <if test="baseclassPid != null">
+                #{baseclassPid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                #{order,jdbcType=VARCHAR},
+            </if>
+            <if test="explain != null">
+                #{explain,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.peony.peonyfront.baseclass.model.Baseclass">
+        update pe_t_baseclass
+        <set>
+            <if test="baseclassPid != null">
+                baseclass_pid = #{baseclassPid,jdbcType=INTEGER},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="order != null">
+                order = #{order,jdbcType=VARCHAR},
+            </if>
+            <if test="explain != null">
+                explain = #{explain,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where baseclass_id = #{baseclassId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.peony.peonyfront.baseclass.model.Baseclass">
+        update pe_t_baseclass
+        set baseclass_pid = #{baseclassPid,jdbcType=INTEGER},
+        name = #{name,jdbcType=VARCHAR},
+        order = #{order,jdbcType=VARCHAR},
+        explain = #{explain,jdbcType=VARCHAR}
+        where baseclass_id = #{baseclassId,jdbcType=INTEGER}
+    </update>
+
+    <!-- 查询所有父节点 -->
+    <select id="selectParent" parameterType="java.util.ArrayList" resultMap="BaseResultMap">
+        select * from pe_t_baseclass
+        <where>
+            <if test="parentCode != null">
+                baseclass_id in
+                <foreach collection="parentCode" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
+        order by `order`
+    </select>
+
+    <!-- 根据父节点查询子节点 -->
+    <select id="selectChildren" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from pe_t_baseclass
+        <where>
+            <if test="baseclassPid != 0">
+                baseclass_pid = #{baseclassPid,jdbcType=INTEGER}
+            </if>
+        </where>
+    </select>
+
+</mapper>
