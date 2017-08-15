@@ -51,7 +51,7 @@ $(document).ready(function(){
                   <li><span class="t_tit1"><a href="javascript:" onclick="showfenxi(this)">分类分析</a></span></li>
                 </ul>
               </div>
-              <div class="yuqing_top" id="yuqing_top">l
+              <div class="yuqing_top" id="yuqing_top">
                 <ul>
                   <li class="tb2 color_bai li_biaoti">标 题</li>
                   <li>
